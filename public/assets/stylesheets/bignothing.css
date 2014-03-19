@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(../fonts/SourceSansPro-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(../fonts/SourceSansPro-Bold.woff) format('woff');
+}
+@font-face {
+  font-family: 'Entypo';
+  src: url(../fonts/entypo.ttf);
+}
+
+
+body {
+    background: #008000;
+    padding: 0px;
+    margin: 0px;
+    font-family: Source Sans Pro;
+}
+
+#topbar {
+    background: black;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+    margin-top: 200px;
+    color: lightgrey;
+    width: 100%;
+    padding: 5px;
+}
+#topbar.static {
+	position: fixed;
+	top: 0px;
+}
+
+#contentstream {
+	background-color: white;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: calc(100% - 60px);
+	padding: 10px;
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+span.icon {
+	display: inline-block;
+	text-align: center;
+	font-family: Entypo;
+	font-size: 3em;
+	vertical-align: middle;
+}
+
+a {
+	color: #0000B3;
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: underline;
+	color: #B30000;
+}
+h1, h2, h3 {
+	color: rgba(60,60,60,1);
+}
+h1, h2 {
+	border-bottom: 2px solid rgba(0,0,0,0.4);
+}
