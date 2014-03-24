@@ -6,36 +6,33 @@
  */
 
 //painless requirements
+require_once __DIR__."/../lib/EventCenter.php";
+require_once __DIR__."/../lib/HookCenter.php";
 require_once __DIR__."/../lib/Template.php";
+Template::setRootPath(__DIR__."/../");
 
-//init session
+//configs
+$configdir_path = __DIR__."/../configs";
+$configdir = opendir($configdir_path);
+while (($file = readdir($configdir)) !== false) {
+    if (!is_dir($configdir_path."/".$file)
+            && strpos($file, ".") !== 0  //no .htaccess or stuff
+            && strpos($file, ".php") !== false) {
+        include_once $configdir_path."/".$file;
+    }
+}
+closedir($configdir);
 
-//
+//init session, login user
 
-require_once __dir__.'/../lib/RouterManager.php';
+
+require_once __DIR__.'/../lib/RouterManager.php';
 
 //init core routes
 
 //init plugins
 
-?>
+echo Template::summon(__DIR__."/../templates/test.php")
+				->with(Template::summon(__DIR__."/../templates/layout.php"))
+				->render();
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<link href="./assets/stylesheets/bignothing.css" rel="stylesheet" media="screen">
-		<link rel="shortcut icon" href="./assets/images/favicon.png">
-		<title>
-			BigNothing
-		</title>
-	</head>
-	<body>
-
-		<div id="topbar">huhu</div>
-		<div id="contentstream">
-			<h1>BigNothing</h1>
-			<a><span class="icon">&#9993;</span>hallo</a>
-		</div>
-	</body>
-</html>

@@ -28,12 +28,23 @@ body {
     box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
     margin-top: 200px;
     color: lightgrey;
-    width: 100%;
+    width: calc(100% - 10px);
     padding: 5px;
 }
-#topbar.static {
+.fixed #topbar {
 	position: fixed;
 	top: 0px;
+	margin-top: 0px;
+}
+#topbar_ghost {
+	margin-top: 200px;
+    width: calc(100% - 10px);
+    padding: 5px;
+	display: none;
+}
+.fixed #topbar_ghost {
+	display: block;
+	visibility: hidden;
 }
 
 #contentstream {

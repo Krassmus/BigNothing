@@ -21,7 +21,7 @@
  */
 class Template {
     
-    static public $root_path = null;
+    static public $root_path = __DIR__;
     static public $replacements = array();
     
     protected $place;
@@ -58,7 +58,7 @@ class Template {
      * @return Template
      */
     public function with($firstparam, $secondparam = null) {
-        if (is_string(firstparam)) {
+        if (is_string($firstparam)) {
             $this->env[$firstparam] = $secondparam;
         }
         if (is_array($firstparam)) {
@@ -69,7 +69,9 @@ class Template {
         if (is_a($firstparam, "Template")) {
             $this->layout = $firstparam;
         }
-        
+        if ($firstparam === null) {
+            $this->layout = null;
+        }
         return $this;
     }
 
@@ -78,7 +80,7 @@ class Template {
      * @return string : output of the template
      */
     public function render() {
-        $this->replace_template();
+        $this->processReplacements();
         foreach($this->env as $varname => $value) {
             ${$varname} = $value;
         }
@@ -92,17 +94,32 @@ class Template {
             : $output;
     }
     
-    protected function replace_template() {
+    /**
+     * Replaces the template if any replacement has been registered.
+     */
+    protected function processReplacements() {
         $relative_path = str_replace(self::$root_path, "", $this->place);
-        $this->place = self::$replacements[$relative_path]
+        $this->place = isset(self::$replacements[$relative_path])
             ? self::$root_path."/".self::$replacements[$relative_path]
             : $this->place;
     }
     
+    /**
+     * Sets the root-path. This is important for replacements of templates. Set this to
+     * the root path of the whole project. All templates of the project must be
+     * in subdirectories of the root-path (or the root-path-directory itself).
+     * @param $path : absolute path to the toppest directory of the project.
+     */
     static public function setRootPath($path) {
         self::$root_path = str_replace("\\", "/", $path)."/";
     }
     
+    /**
+     * Replaces one template with another. Plugins can use this function to
+     * mod the appearance of any template in a radical new way.
+     * @param $path : path to the template from the root-path on. Something like ./app/views/template1
+     * @param $new_template : absolute path of the new template.
+     */
     static public function replace($path, $new_template) {
         $path = str_replace("\\", "/", $path);
         $new_template = str_replace("\\", "/", $new_template);
