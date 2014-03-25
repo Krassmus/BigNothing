@@ -16,7 +16,7 @@ $configdir_path = __DIR__."/../configs";
 $configdir = opendir($configdir_path);
 while (($file = readdir($configdir)) !== false) {
     if (!is_dir($configdir_path."/".$file)
-            && strpos($file, ".") !== 0  //no .htaccess or stuff
+            && strpos($file, ".") !== 0  //no .ht... or other hidden files
             && strpos($file, ".php") !== false) {
         include_once $configdir_path."/".$file;
     }
@@ -24,7 +24,11 @@ while (($file = readdir($configdir)) !== false) {
 closedir($configdir);
 
 //init session, login user
-
+if ($_POST['login'] && $_POST['password']) {
+    include_once __DIR__."/../lib/hooks/LoginAuthenticationHook.php";
+    $loginAuthentication = new LoginAuthenticationHook($_POST['login'], $_POST['password']);
+    $loginAuthentication = HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
+}
 
 require_once __DIR__.'/../lib/RouterManager.php';
 
