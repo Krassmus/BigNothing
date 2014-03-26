@@ -1,5 +1,6 @@
-#RewriteEngine on
-#RewriteRule ^(.+)$ index.php [L]
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . /index.php [L]
 
 Order Allow,Deny
 Allow from all
@@ -10,5 +11,3 @@ php_value memory_limit 150M
 php_value max_execution_time 300
 php_flag short_open_tag On
 php_flag session.use_trans_sid Off
-# 22519 = E_ALL & ~(E_NOTICE|E_DEPRECATED) PHP 5.3.x
-# php_value error_reporting 22519
