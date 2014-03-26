@@ -18,6 +18,7 @@
 
 body {
     background: #008000;
+    background-image: url("../images/noise.png");
     padding: 0px;
     margin: 0px;
     font-family: Source Sans Pro;

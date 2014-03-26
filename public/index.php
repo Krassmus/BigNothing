@@ -26,8 +26,13 @@ closedir($configdir);
 
 //load plugins
 require_once __DIR__."/../lib/ModuleManager.php";
+$moduleManager = new ModuleManager(__DIR__."/../modules");
+$moduleManager->loadPlugins();
+
 $pluginManager = new ModuleManager(__DIR__."/../plugins");
 $pluginManager->loadPlugins();
+
+$moduleManager->setUpPluginHooks();
 $pluginManager->setUpPluginHooks();
 
 //init session, login user
@@ -39,11 +44,12 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 
 require_once __DIR__.'/../lib/RouterManager.php';
 
-//init core routes
-
 //init plugins
+$moduleManager->initPlugins();
 $pluginManager->initPlugins();
-throw new NotLoggedInException();
+
+//throw new NotLoggedInException();
+
 echo Template::summon(__DIR__."/../templates/test.php")
 				->with(Template::summon(__DIR__."/../templates/layout.php"))
 				->render();
