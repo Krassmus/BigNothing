@@ -17,7 +17,7 @@
 
 
 body {
-    background: #008000;
+    background-color: hsla(120, 35%, 40%, 1);
     background-image: url("../images/noise.png");
     padding: 0px;
     margin: 0px;
@@ -26,7 +26,8 @@ body {
 
 #topbar {
     background: black;
-    box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+    background-image: url("../images/noise.png");
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
     margin-top: 200px;
     color: lightgrey;
     width: calc(100% - 10px);
@@ -50,7 +51,7 @@ body {
 
 #contentstream {
 	background-color: white;
-	margin-top: 20px;
+    margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
 	width: calc(100% - 60px);
@@ -58,21 +59,40 @@ body {
 	box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
 }
 
-span.icon {
+.icon {
 	display: inline-block;
 	text-align: center;
 	font-family: Entypo;
-	font-size: 3em;
-	vertical-align: middle;
+	font-size: 2em;
+	vertical-align: text-bottom;
+    line-height: 0.64em;
 }
 
 a {
-	color: #0000B3;
+	color: hsla(240, 35%, 40%, 1);
 	cursor: pointer;
 }
 a:hover {
 	text-decoration: underline;
-	color: #B30000;
+	color: hsla(30, 60%, 35%, 1);
+}
+a.intern:before {
+    content: "";
+    display: inline-block;
+    text-align: center;
+    font-family: Entypo;
+    font-size: 2em;
+    vertical-align: text-bottom;
+    line-height: 0.64em;
+}
+a.extern:before {
+    content: "↳";
+    display: inline-block;
+    text-align: center;
+    font-family: Entypo;
+    font-size: 2em;
+    vertical-align: text-bottom;
+    line-height: 0.64em;
 }
 h1, h2, h3 {
 	color: rgba(60,60,60,1);

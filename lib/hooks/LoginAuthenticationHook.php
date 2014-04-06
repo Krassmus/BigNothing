@@ -27,11 +27,15 @@ class LoginAuthenticationHook implements Hook {
         return $this->password;
     }
 
+    public function isAuthenticated() {
+        return $this->isAuthenticated;
+    }
+
     /**
      * This method is used to authenticate a user. If the interactor of the
      * hook verified loginname and password it should set authenticateLogin(true).
      * If it can't verify the login, it should do nothing.
-     * @param boolean $is: true if login should be authenticated, else false
+     * @param boolean $isAuthenticated: true if login should be authenticated, else false
      */
     public function authenticateLogin($isAuthenticated = true) {
         $this->isAuthenticated = (bool) $isAuthenticated;

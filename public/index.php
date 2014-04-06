@@ -6,10 +6,12 @@
  */
 
 //painless requirements
+require_once __DIR__."/../lib/general_functions.php";
 require_once __DIR__."/../lib/EventCenter.php";
 require_once __DIR__."/../lib/HookCenter.php";
 require_once __DIR__."/../lib/Template.php";
 Template::setRootPath(__DIR__."/../");
+require_once __DIR__."/../lib/Icon.php";
 require_once __DIR__."/../lib/error_handler.php";
 
 //configs
@@ -40,6 +42,9 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     include_once __DIR__."/../lib/hooks/LoginAuthenticationHook.php";
     $loginAuthentication = new LoginAuthenticationHook($_POST['login'], $_POST['password']);
     $loginAuthentication = HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
+    if ($loginAuthentication->isAuthentivated()) {
+
+    }
 }
 
 require_once __DIR__.'/../lib/RouterManager.php';

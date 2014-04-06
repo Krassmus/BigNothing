@@ -1,9 +1,13 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . /index.php [L]
-
 Order Allow,Deny
 Allow from all
+Options +FollowSymlinks
+
+RewriteEngine On
+# RewriteBase /Users/Me/BigNothing/public/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [QSA,L]
+#RewriteLog /tmp/rewritelog
+#RewriteLogLevel 9
 
 php_value upload_max_filesize 100M
 php_value post_max_size 100M
