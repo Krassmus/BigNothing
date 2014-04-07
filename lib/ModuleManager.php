@@ -44,6 +44,15 @@ class ModuleManager {
         }
     }
 
+    public function getPlugin($name) {
+        foreach ($this->plugins as $pluginobject) {
+            if (get_class($pluginobject) === $name) {
+                return $pluginobject;
+            }
+        }
+        return false;
+    }
+
     protected function getDatabasePlugins() {
         return array();
     }

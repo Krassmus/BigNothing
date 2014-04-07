@@ -5,7 +5,7 @@
  * obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-require_once __DIR__."/../vendor/Klein/Klein/Klein.php";
+require_once __DIR__."/BNRouter.php";
 
 /**
  * This class serves a router as a singleton that can be accessed by all plugins and modules.
@@ -16,7 +16,7 @@ class RouterManager {
 
 	static public function getRouter() {
 		if (self::$router === null) {
-			self::$router = new \Klein\Klein();
+			self::$router = new BNRouter();
 		}
 		return self::$router;
 	}
