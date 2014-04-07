@@ -21,15 +21,15 @@ jQuery(function () {
 	var data;
 	window.openpgp.crypto.random.randomBuffer.init(MAX_SIZE_RANDOM_BUFFER);
 	
-	data = window.openpgp.generateKeyPair(1 /*=RSA*/, 1024 /*number of bits*/, "User Name <username@email.com>", "Celebrator");
-	jQuery("#privatekey").text(data.key.armor());
+	//data = window.openpgp.generateKeyPair(1 /*=RSA*/, 1024 /*number of bits*/, "User Name <username@email.com>", "Celebrator");
+	//jQuery("#privatekey").text(data.key.armor());
 	
-	var publicKey = data.key.toPublic();
-	jQuery("#publickey").text(publicKey.armor());
+	//var publicKey = data.key.toPublic();
+	//jQuery("#publickey").text(publicKey.armor());
 
-	BN.crypto.createKeys("User Name <username@email.com>", "Celebrator", function(message) {
+	/*BN.crypto.createKeys("User Name <username@email.com>", "Celebrator", function(message) {
 		console.log("jhgjhg");
-	});
+	});*/
 
 });
 </script>

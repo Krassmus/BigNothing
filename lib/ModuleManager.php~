@@ -44,15 +44,6 @@ class ModuleManager {
         }
     }
 
-    public function getPlugin($name) {
-        foreach ($this->plugins as $pluginobject) {
-            if (get_class($pluginobject) === $name) {
-                return $pluginobject;
-            }
-        }
-        return false;
-    }
-
     protected function getDatabasePlugins() {
         return array();
     }
@@ -60,7 +51,7 @@ class ModuleManager {
     protected function getFileSystemPlugins() {
         $plugins = array();
         $pluginDirectory = opendir($this->pluginFolder);
-        if ($pluginDirectory !== false) {
+        if (pluginDirectory !== false) {
             while (($folder = readdir($pluginDirectory)) !== false) {
                 if (is_dir($this->pluginFolder."/".$folder)
                         && strpos($folder, ".") !== 0) {
