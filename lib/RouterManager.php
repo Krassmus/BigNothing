@@ -5,7 +5,7 @@
  * obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-require_once __DIR__."/BNRouter.php";
+require_once __DIR__ . "/Router.php";
 
 /**
  * This class serves a router as a singleton that can be accessed by all plugins and modules.
@@ -14,9 +14,9 @@ class RouterManager {
 
 	static $router = null;
 
-	static public function getRouter() {
+	static public function getRouter($moduleManager, $pluginManager) {
 		if (self::$router === null) {
-			self::$router = new BNRouter();
+			self::$router = new Router($moduleManager, $pluginManager);
 		}
 		return self::$router;
 	}

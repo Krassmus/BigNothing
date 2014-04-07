@@ -48,6 +48,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 }
 
 require_once __DIR__.'/../lib/RouterManager.php';
+$router = RouterManager::getRouter($moduleManager, $pluginManager);
 
 //init plugins
 $moduleManager->initPlugins();

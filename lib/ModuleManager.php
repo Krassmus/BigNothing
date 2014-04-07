@@ -7,7 +7,7 @@
 
 class ModuleManager {
 
-    protected $pluginPath = null;
+    protected $pluginFolder = null;
     protected $pluginClasses = null;
     protected $plugins = null;
 
@@ -44,13 +44,22 @@ class ModuleManager {
         }
     }
 
-    public function getPlugin($name) {
+    public function getModule($name) {
         foreach ($this->plugins as $pluginobject) {
             if (get_class($pluginobject) === $name) {
                 return $pluginobject;
             }
         }
         return false;
+    }
+
+    public function routeModule($module, $controller, $action, $vars) {
+        $module = $this->getModule($module);
+        if ($module) {
+            return $module->perform($controller, $action, $vars);
+        } else {
+            return false;
+        }
     }
 
     protected function getDatabasePlugins() {
