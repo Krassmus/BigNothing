@@ -1,11 +1,11 @@
 Order Allow,Deny
 Allow from all
-Options +FollowSymlinks
+#Options +FollowSymlinks
 
-RewriteEngine On
+# RewriteEngine On
 # RewriteBase /Users/Me/BigNothing/public/
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php [QSA,L]
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^(.*)$ index.php [QSA,L]
 #RewriteLog /tmp/rewritelog
 #RewriteLogLevel 9
 

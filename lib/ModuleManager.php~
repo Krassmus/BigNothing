@@ -51,7 +51,7 @@ class ModuleManager {
     protected function getFileSystemPlugins() {
         $plugins = array();
         $pluginDirectory = opendir($this->pluginFolder);
-        if ($pluginDirectory !== false) {
+        if (pluginDirectory !== false) {
             while (($folder = readdir($pluginDirectory)) !== false) {
                 if (is_dir($this->pluginFolder."/".$folder)
                         && strpos($folder, ".") !== 0) {
