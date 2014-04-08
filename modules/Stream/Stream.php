@@ -6,7 +6,6 @@
  */
 
 namespace Stream;
-
 class Stream extends \Module {
 
 }

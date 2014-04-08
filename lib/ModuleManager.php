@@ -9,7 +9,7 @@ class ModuleManager {
 
     protected $pluginFolder = null;
     protected $pluginClasses = null;
-    protected $plugins = null;
+    protected $plugins = array();
 
     public function __construct($path) {
         $this->pluginFolder = $path;
@@ -20,12 +20,18 @@ class ModuleManager {
             $this->getPlugins();
         }
         foreach ($this->pluginClasses as $plugin) {
-            include_once $this->pluginFolder."/$plugin/$plugin.plugin.php";
+            $plugin = strtolower($plugin);
+            $pluginClass = ucfirst($plugin);
+            include $this->pluginFolder."/".$plugin."/".$pluginClass.".php";
+            if (class_exists($pluginClass)) {
+                $this->plugins[] = new $pluginClass();
+            }
         }
     }
 
     public function getPlugins() {
-        $this->pluginClasses = array_intersect(self::getDatabasePlugins(), self::getFileSystemPlugins());
+        //$this->pluginClasses = array_intersect(self::getDatabasePlugins(), self::getFileSystemPlugins());
+        $this->pluginClasses = self::getDatabasePlugins() + self::getFileSystemPlugins();
     }
 
     public function setUpPluginHooks() {
@@ -38,7 +44,9 @@ class ModuleManager {
 
     public function initPlugins() {
         foreach ($this->pluginClasses as $plugin) {
+            $plugin = ucfirst($plugin);
             if (class_exists($plugin)) {
+                var_dump($plugin);
                 $this->plugins[] = new $plugin();
             }
         }
@@ -67,19 +75,19 @@ class ModuleManager {
     }
 
     protected function getFileSystemPlugins() {
-        $plugins = array();
-        $pluginDirectory = opendir($this->pluginFolder);
-        if ($pluginDirectory !== false) {
-            while (($folder = readdir($pluginDirectory)) !== false) {
+        $modules = array();
+        $moduleDirectory = opendir($this->pluginFolder);
+        if ($moduleDirectory !== false) {
+            while (($folder = readdir($moduleDirectory)) !== false) {
                 if (is_dir($this->pluginFolder."/".$folder)
                         && strpos($folder, ".") !== 0) {
-                    if (file_exists($this->pluginFolder."/".$folder)."/$folder.plugin.php") {
-                        $plugins[] = $folder;
+                    if (file_exists($this->pluginFolder."/".$folder)."/$folder.php") {
+                        $modules[] = $folder;
                     }
                 }
             }
         }
-        closedir($pluginDirectory);
-        return $plugins;
+        closedir($moduleDirectory);
+        return $modules;
     }
 }

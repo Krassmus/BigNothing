@@ -10,6 +10,8 @@ require_once __DIR__."/../lib/general_functions.php";
 require_once __DIR__."/../lib/EventCenter.php";
 require_once __DIR__."/../lib/HookCenter.php";
 require_once __DIR__."/../lib/Template.php";
+require_once __DIR__."/../lib/Module.php";
+require_once __DIR__."/../lib/Controller.php";
 Template::setRootPath(__DIR__."/../");
 require_once __DIR__."/../lib/Icon.php";
 require_once __DIR__."/../lib/error_handler.php";
@@ -51,8 +53,10 @@ require_once __DIR__.'/../lib/RouterManager.php';
 $router = RouterManager::getRouter($moduleManager, $pluginManager);
 
 //init plugins
-$moduleManager->initPlugins();
-$pluginManager->initPlugins();
+//$moduleManager->initPlugins();
+//$pluginManager->initPlugins();
+
+$router->processRouting("/stream/everything/index");
 
 //throw new NotLoggedInException();
 
