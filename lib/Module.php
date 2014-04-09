@@ -20,15 +20,19 @@ abstract class Module {
      * @param $vars
      */
     public function perform($controller, $action, $vars) {
+        $controller = ucfirst(strtolower($controller));
         $moduleClass = get_class($this);
         $reflection = new ReflectionClass($moduleClass);
         $directory = dirname($reflection->getFileName());
+        $namespace = $reflection->getNamespaceName();
         $controllerFile = $directory."/controller/".$controller.".php";
         if (file_exists($controllerFile)) {
-            include_once $controllerFile;
-            $controllerClass = '\\'.$moduleClass.'\\'.$controller;
-            $controller = new $controllerClass();
-            $controller->renderAction($action, $vars);
+            require_once $controllerFile;
+            $controllerClass = '\\'.$namespace.'\\'.$controller;
+            if (class_exists($controllerClass)) {
+                $controller = new $controllerClass();
+                $controller->renderAction($action, $vars);
+            }
         }
     }
 }

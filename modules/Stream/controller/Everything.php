@@ -10,6 +10,7 @@ namespace Stream;
 class Everything extends \Controller {
 
     public function indexAction() {
-        echo "yeah";
+        $this->test = "hallo welt";
+        $this->renderView();
     }
 }

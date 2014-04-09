@@ -22,10 +22,8 @@ class ModuleManager {
         foreach ($this->pluginClasses as $plugin) {
             $plugin = strtolower($plugin);
             $pluginClass = ucfirst($plugin);
-            include $this->pluginFolder."/".$plugin."/".$pluginClass.".php";
-            if (class_exists($pluginClass)) {
-                $this->plugins[] = new $pluginClass();
-            }
+            $pluginFile = $this->pluginFolder."/".$plugin."/".$pluginClass.".php";
+            require_once $pluginFile;
         }
     }
 
@@ -44,17 +42,17 @@ class ModuleManager {
 
     public function initPlugins() {
         foreach ($this->pluginClasses as $plugin) {
-            $plugin = ucfirst($plugin);
-            if (class_exists($plugin)) {
-                var_dump($plugin);
-                $this->plugins[] = new $plugin();
+            $pluginClass = "\\".ucfirst($plugin)."\\".ucfirst($plugin);
+            if (class_exists($pluginClass)) {
+                $this->plugins[] = new $pluginClass();
             }
         }
     }
 
     public function getModule($name) {
+        $name = ucfirst(strtolower($name));
         foreach ($this->plugins as $pluginobject) {
-            if (get_class($pluginobject) === $name) {
+            if (get_class($pluginobject) === $name."\\".$name) {
                 return $pluginobject;
             }
         }

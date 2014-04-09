@@ -29,6 +29,9 @@ class Router {
             }
         }
         $currentRoute = explode("/", $currentRoute);
+        while (!trim($currentRoute[0])) {
+            array_shift($currentRoute);
+        }
         $vars = array_slice($currentRoute, 3);
 
         if ($currentRoute[0] === "plugins") {

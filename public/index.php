@@ -53,14 +53,14 @@ require_once __DIR__.'/../lib/RouterManager.php';
 $router = RouterManager::getRouter($moduleManager, $pluginManager);
 
 //init plugins
-//$moduleManager->initPlugins();
-//$pluginManager->initPlugins();
+$moduleManager->initPlugins();
+$pluginManager->initPlugins();
 
 $router->processRouting("/stream/everything/index");
 
 //throw new NotLoggedInException();
 
-echo Template::summon(__DIR__."/../templates/test.php")
+/*echo Template::summon(__DIR__."/../templates/test.php")
 				->with(Template::summon(__DIR__."/../templates/layout.php"))
 				->render();
-
+*/
