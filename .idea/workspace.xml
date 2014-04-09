@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ac1a624-486f-41ca-b198-c72ae8ffa74f" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/stream2/controller/Everything.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/stream2/Stream.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/stream2/views/everything/index.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/Stream/Stream.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/Stream/controller/Everything.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/Stream/views/everything2/index.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.php" afterPath="$PROJECT_DIR$/public/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/javascripts/jquery/jquery-1.8.2.js" afterPath="$PROJECT_DIR$/public/assets/javascripts/jquery/jquery-1.8.2.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/javascripts/jquery/jquery-ui-1.9.1.custom.js" afterPath="$PROJECT_DIR$/public/assets/javascripts/jquery/jquery-ui-1.9.1.custom.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/packet.js" afterPath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/packet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/packetlist.js" afterPath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/packetlist.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/signature.js" afterPath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/signature.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/sym_encrypted_integrity_protected.js" afterPath="$PROJECT_DIR$/public/assets/javascripts/openpgpjs/src/packet/sym_encrypted_integrity_protected.js" />
     </list>
     <ignored path="BigNothing.iws" />
@@ -80,7 +89,7 @@
         </entry>
       </file>
       <file leaf-file-name="Everything.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/stream/controller/Everything.php">
+        <entry file="file://$PROJECT_DIR$/modules/stream2/controller/Everything.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="12" column="35" selection-start="346" selection-end="346" vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="315">
               <folding>
@@ -91,7 +100,7 @@
         </entry>
       </file>
       <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/stream/views/everything2/index.php">
+        <entry file="file://$PROJECT_DIR$/modules/stream2/views/everything/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="6" column="10" selection-start="26" selection-end="26" vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="180">
               <folding />
@@ -289,7 +298,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="stream" />
+              <option name="myItemId" value="stream2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -307,7 +316,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="stream" />
+              <option name="myItemId" value="stream2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -315,7 +324,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="everything2" />
+              <option name="myItemId" value="everything" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -333,7 +342,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="stream" />
+              <option name="myItemId" value="stream2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -695,7 +704,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/stream/Stream.php">
+    <entry file="file://$PROJECT_DIR$/modules/stream2/Stream.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="0" selection-start="265" selection-end="265" vertical-scroll-proportion="0.2393617" vertical-offset="0" max-vertical-offset="564">
           <folding>
@@ -757,7 +766,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/stream/controller/Everything.php">
+    <entry file="file://$PROJECT_DIR$/modules/stream2/controller/Everything.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="35" selection-start="346" selection-end="346" vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="315">
           <folding>
@@ -766,7 +775,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/stream/views/everything2/index.php">
+    <entry file="file://$PROJECT_DIR$/modules/stream2/views/everything/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="10" selection-start="26" selection-end="26" vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="180">
           <folding />

@@ -24,7 +24,7 @@ function Packetlist() {
   this.length = 0;
 }
 /**
- * Reads a stream of binary data and interprents it as a list of packets.
+ * Reads a stream2 of binary data and interprents it as a list of packets.
  * @param {String} A binary string of bytes.
  */
 Packetlist.prototype.read = function (bytes) {

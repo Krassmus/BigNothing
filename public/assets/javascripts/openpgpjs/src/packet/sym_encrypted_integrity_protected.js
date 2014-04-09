@@ -112,7 +112,7 @@ SymEncryptedIntegrityProtected.prototype.decrypt = function (sessionKeyAlgorithm
 
 
   // there must be a modification detection code packet as the
-  // last packet and everything2 gets hashed except the hash itself
+  // last packet and everything gets hashed except the hash itself
   this.hash = crypto.hash.sha1(
     crypto.cfb.mdc(sessionKeyAlgorithm, key, this.encrypted) + decrypted.substring(0, decrypted.length - 20));
 

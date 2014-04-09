@@ -56,7 +56,7 @@ $router = RouterManager::getRouter($moduleManager, $pluginManager);
 $moduleManager->initPlugins();
 $pluginManager->initPlugins();
 
-$router->processRouting("/stream/everything2/index");
+$router->processRouting("/stream2/everything/index");
 
 //throw new NotLoggedInException();
 
