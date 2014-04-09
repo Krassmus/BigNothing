@@ -477,7 +477,7 @@ $.widget.extend = function( target ) {
 						$.widget.extend( {}, target[ key ], value ) :
 						// Don't extend strings, arrays, etc. with objects
 						$.widget.extend( {}, value );
-				// Copy everything else by reference
+				// Copy everything2 else by reference
 				} else {
 					target[ key ] = value;
 				}
@@ -1601,7 +1601,7 @@ $.widget("ui.draggable", $.ui.mouse, {
 
 		/*
 		 * - Position generation -
-		 * This block generates everything position related - it's the core of draggables.
+		 * This block generates everything2 position related - it's the core of draggables.
 		 */
 
 		//Cache the margins of the original element
@@ -3765,7 +3765,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 		/*
 		 * - Position generation -
-		 * This block generates everything position related - it's the core of draggables.
+		 * This block generates everything2 position related - it's the core of draggables.
 		 */
 
 		//Cache the margins of the original element
@@ -4624,7 +4624,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 		this.reverting = false;
 		// We delay all events that have to be triggered to after the point where the placeholder has been removed and
-		// everything else normalized again
+		// everything2 else normalized again
 		var delayedTriggers = [];
 
 		// We first have to update the dom position of the actual currentItem
@@ -12879,7 +12879,7 @@ color.fn = jQuery.extend( color.prototype, {
 						inst[ cache ][ prop.idx ] = clamp( red[ key ], prop, true );
 					});
 
-					// everything defined but alpha?
+					// everything2 defined but alpha?
 					if ( inst[ cache ] && $.inArray( null, inst[ cache ].slice( 0, 3 ) ) < 0 ) {
 						// use the default of 1
 						inst[ cache ][ 3 ] = 1;

@@ -7701,7 +7701,7 @@ jQuery.extend({
 				}
 			};
 
-		// Callback for when everything is done
+		// Callback for when everything2 is done
 		// It is defined here because jslint complains if it is declared
 		// at the end of the function (which would be more logical and readable)
 		function done( status, nativeStatusText, responses, headers ) {
