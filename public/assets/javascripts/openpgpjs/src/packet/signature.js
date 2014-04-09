@@ -434,7 +434,7 @@ Signature.prototype.read_sub_packet = function (bytes) {
       // We don't know how to handle anything but a text flagged data.
       if (bytes.charCodeAt(mypos) == 0x80) {
 
-        // We extract key/value tuple from the byte stream2.
+        // We extract key/value tuple from the byte stream.
         mypos += 4;
         var m = util.readNumber(bytes.substr(mypos, 2));
         mypos += 2;

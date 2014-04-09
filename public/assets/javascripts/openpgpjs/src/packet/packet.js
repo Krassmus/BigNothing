@@ -115,7 +115,7 @@ module.exports = {
   /**
    * Generic static Packet Parser function
    * 
-   * @param {String} input Input stream2 as string
+   * @param {String} input Input stream as string
    * @param {integer} position Position to start parsing
    * @param {integer} len Length of the input from position on
    * @return {Object} Returns a parsed module:packet/packet
