@@ -123,3 +123,31 @@ h1 {
 #loginwindow input, #loginwindow table {
     width: 100%;
 }
+
+/* Stream */
+
+.context_background_left {
+    background: -moz-linear-gradient(left center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
+    background-size: 20% 100%;
+}
+.context_background_right {
+    background: -moz-linear-gradient(right center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
+    background-size: 20% 100%;
+    background-position: right;
+}
+ul.activitystream {
+    width: 60%;
+    border-left: thin solid hsla(240, 35%, 40%, 1);
+    border-right: thin solid hsla(240, 35%, 40%, 1);
+    margin: 0px;
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+ul.activitystream > li {
+    list-style-type: none;
+    border-bottom: thin solid hsla(240, 35%, 40%, 1);
+}
+ul.activitystream > li:last-child {
+    border-bottom: none;
+}

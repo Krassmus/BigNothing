@@ -5,6 +5,18 @@
  * obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/**
+ * Abstract class Module. All modules and plugins must be derived from this class.
+ *
+ * The module gets its own MVC framework if it wants to. To do so it should
+ * have at least one Controller-class in the subdirectory "controller".
+ *
+ * But it could also set up its own special routes in the constructor or do other stuff
+ * there.
+ *
+ * If the module should interact with any hooks (see class HookCenter) it should
+ * register static methods in the method "setUpPluginHooks".
+ */
 abstract class Module {
 
     /**
@@ -31,7 +43,7 @@ abstract class Module {
             $controllerClass = '\\'.$namespace.'\\'.$controller;
             if (class_exists($controllerClass)) {
                 $controller = new $controllerClass();
-                $controller->renderAction($action, $vars);
+                $controller->performAction($action, $vars);
             }
         }
     }
