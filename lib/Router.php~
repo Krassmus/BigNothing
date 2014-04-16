@@ -28,6 +28,7 @@ class Router {
                 return true;
             }
         }
+        var_dump($currentRoute);
         $currentRoute = explode("/", $currentRoute);
         while (count($currentRoute) > 0 && !trim($currentRoute[0])) {
             array_shift($currentRoute);

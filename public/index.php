@@ -56,7 +56,13 @@ $router = RouterManager::getRouter($moduleManager, $pluginManager);
 $moduleManager->initPlugins();
 $pluginManager->initPlugins();
 
-$router->processRouting("/stream/everything/index");
+$route = substr($_SERVER['REQUEST_URI'], strlen($_SERVER['CONTEXT_PREFIX'])) ?: "/";
+
+if ($route === "/") {
+    $route = "/stream/everything/index";
+}
+
+$router->processRouting($route);
 
 //throw new NotLoggedInException();
 
