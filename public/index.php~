@@ -64,7 +64,7 @@ if ($route === "/") {
     $route = "/stream/everything/index";
 }
 
-//throw new NotLoggedInException();
+throw new NotLoggedInException();
 
 $routed = $router->processRouting($route);
 
