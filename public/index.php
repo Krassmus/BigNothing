@@ -56,9 +56,19 @@ $router = RouterManager::getRouter($moduleManager, $pluginManager);
 $moduleManager->initPlugins();
 $pluginManager->initPlugins();
 
-$router->processRouting("/stream/everything/index");
+$route = $_SERVER['REQUEST_URI'];
+if (isset($_SERVER['CONTEXT_PREFIX'])) {
+    $route = substr($route, strlen($_SERVER['CONTEXT_PREFIX']) ?: "/");
+}
+if ($route === "/") {
+    $route = "/stream/everything/index";
+}
 
 //throw new NotLoggedInException();
+
+$routed = $router->processRouting($route);
+
+
 
 /*echo Template::summon(__DIR__."/../templates/test.php")
 				->with(Template::summon(__DIR__."/../templates/layout.php"))

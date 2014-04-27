@@ -29,16 +29,22 @@ class Router {
             }
         }
         $currentRoute = explode("/", $currentRoute);
-        while (!trim($currentRoute[0])) {
+        while (count($currentRoute) > 0 && !trim($currentRoute[0])) {
             array_shift($currentRoute);
         }
         $vars = array_slice($currentRoute, 3);
 
         if ($currentRoute[0] === "plugins") {
             array_shift($currentRoute);
-            $this->pluginManager->routeModule($currentRoute[0], $currentRoute[1], $currentRoute[2], $vars);
+            if (!isset($currentRoute[2])) {
+                return false;
+            }
+            return $this->pluginManager->routeModule($currentRoute[0], $currentRoute[1], $currentRoute[2], $vars);
         } else {
-            $this->moduleManager->routeModule($currentRoute[0], $currentRoute[1], $currentRoute[2], $vars);
+            if (!isset($currentRoute[2])) {
+                return false;
+            }
+            return $this->moduleManager->routeModule($currentRoute[0], $currentRoute[1], $currentRoute[2], $vars);
         }
     }
 

@@ -1,13 +1,12 @@
 Order Allow,Deny
 Allow from all
-#Options +FollowSymlinks
+Options +FollowSymlinks
 
-# RewriteEngine On
-# RewriteBase /Users/Me/BigNothing/public/
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteRule ^(.*)$ index.php [QSA,L]
-#RewriteLog /tmp/rewritelog
-#RewriteLogLevel 9
+RewriteEngine On
+# Use RewriteBase if you use Alias! The parameter of RewriteBase is the path behind the domain-part to your script.
+RewriteBase /bignothing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [L,NC]
 
 php_value upload_max_filesize 100M
 php_value post_max_size 100M
