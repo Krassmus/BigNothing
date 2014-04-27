@@ -1,23 +1,36 @@
 @font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(../fonts/SourceSansPro-Regular.woff) format('woff');
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(../fonts/SourceSansPro-Regular.woff) format('woff');
 }
 @font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(../fonts/SourceSansPro-Bold.woff) format('woff');
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(../fonts/SourceSansPro-Bold.woff) format('woff');
 }
 @font-face {
-  font-family: 'Entypo';
-  src: url(../fonts/entypo.ttf);
+    font-family: 'Entypo';
+    src: url(../fonts/entypo.ttf);
+}
+
+:root {
+    var-base-color: 120;
+    var-background-color: hsla(var(base-color), 35%, 40%, 1);
+    var-click-color: hsla(calc(var(base-color) + 120), 35%, 40%, 1);
+    var-hover-color: hsla(calc(var(base-color) + 270), 60%, 35%, 1);
+    --base-color: 180;
+    --background-color: hsla(var(--base-color), 35%, 40%, 1);
+    --click-color: hsla(calc(var(--base-color) + 120), 35%, 40%, 1);
+    --hover-color: hsla(calc(var(--base-color) + 270), 60%, 35%, 1);
 }
 
 
 body {
     background-color: hsla(120, 35%, 40%, 1);
+    background-color: var(background-color);
+    background-color: var(--background-color);
     background-image: url("../images/noise.png");
     padding: 0px;
     margin: 0px;
@@ -70,11 +83,13 @@ body {
 
 a {
 	color: hsla(240, 35%, 40%, 1);
+    color: var(click-color);
 	cursor: pointer;
 }
 a:hover {
 	text-decoration: underline;
 	color: hsla(30, 60%, 35%, 1);
+    color: var(hover-color);
 }
 a.intern:before {
     content: "";

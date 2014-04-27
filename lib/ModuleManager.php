@@ -49,6 +49,11 @@ class ModuleManager {
         }
     }
 
+    /**
+     * Returns the Module-object of the module or false if there is no such module.
+     * @param string $name : name of the module.
+     * @return bool|Module : returns the Module-object of the module or false if there is no such module.
+     */
     public function getModule($name) {
         $name = ucfirst(strtolower($name));
         foreach ($this->plugins as $pluginobject) {
@@ -59,6 +64,14 @@ class ModuleManager {
         return false;
     }
 
+    /**
+     * Tells a module to perform a certain route. If this module is either nonexistent or has no controller or that controller has no such action, routing was unsuccessful and returns false.
+     * @param string $module : name of the module
+     * @param string $controller : name of the controller
+     * @param string $action : name of the action
+     * @param array $vars : associative array of variables like array('username' => $username)
+     * @return bool : true if routing was successful, else false. Routing was only successful, if there is a module with the given name and that module has a fitting controller with the given action.
+     */
     public function routeModule($module, $controller, $action, $vars) {
         $module = $this->getModule($module);
         if ($module) {
