@@ -424,7 +424,11 @@
       <created>1398632786899</created>
       <updated>1398632786899</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="for hells sake">
+      <created>1398632927351</created>
+      <updated>1398632927351</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -471,7 +475,8 @@
     <MESSAGE value="restructure" />
     <MESSAGE value="restructure and add documentation" />
     <MESSAGE value="small changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="small changes" />
+    <MESSAGE value="for hells sake" />
+    <option name="LAST_COMMIT_MESSAGE" value="for hells sake" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
