@@ -68,9 +68,3 @@ if ($route === "/") {
 
 $routed = $router->processRouting($route);
 
-
-
-/*echo Template::summon(__DIR__."/../templates/test.php")
-				->with(Template::summon(__DIR__."/../templates/layout.php"))
-				->render();
-*/
