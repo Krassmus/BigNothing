@@ -26,6 +26,11 @@ abstract class Controller {
         call_user_func_array(array($this, $methodName), $vars);
     }
 
+    /**
+     * Renders the view belonging to the given action. Call this at the end of each action-method
+     * of your controller to display the view.
+     * @param null|string $action : name of the action that should be rendered.
+     */
     public function renderView($action = null) {
         $reflection = new ReflectionClass(get_class($this));
         $action || $action = $this->currentAction;

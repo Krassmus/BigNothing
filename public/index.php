@@ -12,6 +12,7 @@ require_once __DIR__."/../lib/HookCenter.php";
 require_once __DIR__."/../lib/Template.php";
 require_once __DIR__."/../lib/Module.php";
 require_once __DIR__."/../lib/Controller.php";
+require_once __DIR__."/../lib/AuthenticatedController.php";
 Template::setRootPath(__DIR__."/../");
 require_once __DIR__."/../lib/Icon.php";
 require_once __DIR__."/../lib/error_handler.php";
@@ -45,7 +46,10 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     $loginAuthentication = new LoginAuthenticationHook($_POST['login'], $_POST['password']);
     $loginAuthentication = HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
     if ($loginAuthentication->isAuthentivated()) {
-
+        session_start();
+        $_SESSION['currentLogin'] = true;
+    } else {
+        unset($_SESSION);
     }
 }
 

@@ -7,7 +7,7 @@
 
 namespace Stream;
 
-class Everything extends \Controller {
+class Everything extends \AuthenticatedController {
 
     public function indexAction() {
         $this->test = "hallo welt";
