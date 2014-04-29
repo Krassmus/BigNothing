@@ -20,6 +20,7 @@ abstract class Controller {
      * @param array $vars : an associative array with variables in the form array('user' => $user)
      */
     public function performAction($action, $vars = array()) {
+        $action || $action = "default";
         $this->currentAction = $action;
         $this->currentLayout = Template::summon(__DIR__."/../templates/layout.php");
         $methodName = $action."Action";
@@ -44,7 +45,6 @@ abstract class Controller {
             $classVars = get_class_vars(get_class($this));
             $objectVars = get_object_vars($this);
             $view->with(array_diff_key($objectVars, $classVars));
-
             echo $view->render();
         }
 

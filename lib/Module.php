@@ -23,7 +23,7 @@ abstract class Module {
      * This static method can be used by the module to register itself to various hooks in the system.
      * This method is called even before the module itself is invoked.
      */
-    public static function setUpPluginHooks() {}
+    public static function setUpModuleHooks() {}
 
     /**
      * This method is called to render actions of the module.

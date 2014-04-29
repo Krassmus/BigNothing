@@ -32,13 +32,13 @@ closedir($configdir);
 //load plugins
 require_once __DIR__."/../lib/ModuleManager.php";
 $moduleManager = new ModuleManager(__DIR__."/../modules");
-$moduleManager->loadPlugins();
+$moduleManager->loadModules();
 
 $pluginManager = new ModuleManager(__DIR__."/../plugins");
-$pluginManager->loadPlugins();
+$pluginManager->loadModules();
 
-$moduleManager->setUpPluginHooks();
-$pluginManager->setUpPluginHooks();
+$moduleManager->setUpModuleHooks();
+$pluginManager->setUpModuleHooks();
 
 //init session, login user
 if (isset($_POST['login']) && isset($_POST['password'])) {
@@ -57,8 +57,8 @@ require_once __DIR__.'/../lib/RouterManager.php';
 $router = RouterManager::getRouter($moduleManager, $pluginManager);
 
 //init plugins
-$moduleManager->initPlugins();
-$pluginManager->initPlugins();
+$moduleManager->initModules();
+$pluginManager->initModules();
 
 $route = $_SERVER['REQUEST_URI'];
 if (isset($_SERVER['CONTEXT_PREFIX'])) {
@@ -68,7 +68,9 @@ if ($route === "/") {
     $route = "/stream/everything/index";
 }
 
-//throw new NotLoggedInException();
-
 $routed = $router->processRouting($route);
+
+if (!$routed) {
+    throw new Exception("404");
+}
 

@@ -7,44 +7,44 @@
 
 class ModuleManager {
 
-    protected $pluginFolder = null;
-    protected $pluginClasses = null;
-    protected $plugins = array();
+    protected $moduleFolder = null;
+    protected $moduleClasses = null;
+    protected $modules = array();
 
     public function __construct($path) {
-        $this->pluginFolder = $path;
+        $this->moduleFolder = $path;
     }
 
-    public function loadPlugins() {
-        if ($this->pluginClasses === null) {
-            $this->getPlugins();
+    public function loadModules() {
+        if ($this->moduleClasses === null) {
+            $this->getModules();
         }
-        foreach ($this->pluginClasses as $plugin) {
-            $plugin = strtolower($plugin);
-            $pluginClass = ucfirst($plugin);
-            $pluginFile = $this->pluginFolder."/".$plugin."/".$pluginClass.".php";
-            require_once $pluginFile;
+        foreach ($this->moduleClasses as $module) {
+            $module = strtolower($module);
+            $moduleClass = ucfirst($module);
+            $moduleFile = $this->moduleFolder."/".$module."/".$moduleClass.".php";
+            require_once $moduleFile;
         }
     }
 
-    public function getPlugins() {
-        //$this->pluginClasses = array_intersect(self::getDatabasePlugins(), self::getFileSystemPlugins());
-        $this->pluginClasses = self::getDatabasePlugins() + self::getFileSystemPlugins();
+    public function getModules() {
+        //$this->moduleClasses = array_intersect(self::getDatabaseModules(), self::getFileSystemModules());
+        $this->moduleClasses = self::getDatabaseModules() + self::getFileSystemModules();
     }
 
-    public function setUpPluginHooks() {
-        foreach ($this->pluginClasses as $plugin) {
-            if (class_exists($plugin)) {
-                $plugin::setUpPluginHooks();
+    public function setUpModuleHooks() {
+        foreach ($this->moduleClasses as $module) {
+            if (class_exists($module)) {
+                $module::setUpModuleHooks();
             }
         }
     }
 
-    public function initPlugins() {
-        foreach ($this->pluginClasses as $plugin) {
-            $pluginClass = "\\".ucfirst($plugin)."\\".ucfirst($plugin);
-            if (class_exists($pluginClass)) {
-                $this->plugins[] = new $pluginClass();
+    public function initModules() {
+        foreach ($this->moduleClasses as $module) {
+            $moduleClass = "\\".ucfirst($module)."\\".ucfirst($module);
+            if (class_exists($moduleClass)) {
+                $this->modules[] = new $moduleClass();
             }
         }
     }
@@ -56,9 +56,9 @@ class ModuleManager {
      */
     public function getModule($name) {
         $name = ucfirst(strtolower($name));
-        foreach ($this->plugins as $pluginobject) {
-            if (get_class($pluginobject) === $name."\\".$name) {
-                return $pluginobject;
+        foreach ($this->modules as $moduleobject) {
+            if (get_class($moduleobject) === $name."\\".$name) {
+                return $moduleobject;
             }
         }
         return false;
@@ -81,18 +81,18 @@ class ModuleManager {
         }
     }
 
-    protected function getDatabasePlugins() {
+    protected function getDatabaseModules() {
         return array();
     }
 
-    protected function getFileSystemPlugins() {
+    protected function getFileSystemModules() {
         $modules = array();
-        $moduleDirectory = opendir($this->pluginFolder);
+        $moduleDirectory = opendir($this->moduleFolder);
         if ($moduleDirectory !== false) {
             while (($folder = readdir($moduleDirectory)) !== false) {
-                if (is_dir($this->pluginFolder."/".$folder)
+                if (is_dir($this->moduleFolder."/".$folder)
                         && strpos($folder, ".") !== 0) {
-                    if (file_exists($this->pluginFolder."/".$folder)."/$folder.php") {
+                    if (file_exists($this->moduleFolder."/".$folder)."/$folder.php") {
                         $modules[] = $folder;
                     }
                 }

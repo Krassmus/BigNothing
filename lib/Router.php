@@ -36,15 +36,25 @@ class Router {
 
         if ($currentRoute[0] === "plugins") {
             array_shift($currentRoute);
-            if (!isset($currentRoute[2])) {
+            if (!isset($currentRoute[1])) {
                 return false;
             }
-            return $this->pluginManager->routeModule($currentRoute[0], $currentRoute[1], $currentRoute[2], $vars);
+            return $this->pluginManager->routeModule(
+                $currentRoute[0],
+                $currentRoute[1],
+                isset($currentRoute[2]) ? $currentRoute[2] : null,
+                $vars
+            );
         } else {
-            if (!isset($currentRoute[2])) {
+            if (!isset($currentRoute[1])) {
                 return false;
             }
-            return $this->moduleManager->routeModule($currentRoute[0], $currentRoute[1], $currentRoute[2], $vars);
+            return $this->moduleManager->routeModule(
+                $currentRoute[0],
+                $currentRoute[1],
+                isset($currentRoute[2]) ? $currentRoute[2] : null,
+                $vars
+            );
         }
     }
 
