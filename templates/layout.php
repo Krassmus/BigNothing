@@ -2,13 +2,13 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<link href="http://localhost/bignothing/assets/stylesheets/bignothing.css" rel="stylesheet" media="screen">
-		<link rel="shortcut icon" href="http://localhost/bignothing/assets/images/favicon.png">
-		<script src="http://localhost/bignothing/assets/javascripts/jquery/jquery-1.8.2.js"></script>
-		<script src="http://localhost/bignothing/assets/javascripts/jquery/jquery-ui-1.9.1.custom.js"></script>
-		<script src="http://localhost/bignothing/assets/javascripts/underscore/underscore-min.js"></script>
-		<script src="http://localhost/bignothing/assets/javascripts/openpgpjs/openpgp.min.js"></script>
-		<script src="http://localhost/bignothing/assets/javascripts/bignothing.js"></script>
+		<link href="<?= $GLOBALS['URI'] ?>assets/stylesheets/bignothing.css" rel="stylesheet" media="screen">
+		<link rel="shortcut icon" href="<?= $GLOBALS['URI'] ?>assets/images/favicon.png">
+		<script src="<?= $GLOBALS['URI'] ?>assets/javascripts/jquery/jquery-1.8.2.js"></script>
+		<script src="<?= $GLOBALS['URI'] ?>assets/javascripts/jquery/jquery-ui-1.9.1.custom.js"></script>
+		<script src="<?= $GLOBALS['URI'] ?>assets/javascripts/underscore/underscore-min.js"></script>
+		<script src="<?= $GLOBALS['URI'] ?>assets/javascripts/openpgpjs/openpgp.min.js"></script>
+		<script src="<?= $GLOBALS['URI'] ?>assets/javascripts/bignothing.js"></script>
 
 		<title>
 			BigNothing

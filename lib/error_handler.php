@@ -9,8 +9,6 @@ require_once __DIR__."/exceptions/NotLoggedInException.php";
 
 set_exception_handler(function ($exception) {
     if (is_a($exception, "NotLoggedInException")) {
-        echo Template::summon(__DIR__."/../templates/login.php")
-            ->render();
-        die();
+        header("Location: ".$GLOBALS['URI']."authentication/login");
     }
 });
