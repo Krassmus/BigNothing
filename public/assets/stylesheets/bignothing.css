@@ -16,11 +16,11 @@
 }
 
 :root {
-    var-base-color: 120;
+    /*var-base-color: 120;
     var-background-color: hsla(var(base-color), 35%, 40%, 1);
     var-click-color: hsla(calc(var(base-color) + 120), 35%, 40%, 1);
-    var-hover-color: hsla(calc(var(base-color) + 270), 60%, 35%, 1);
-    --base-color: 180;
+    var-hover-color: hsla(calc(var(base-color) + 270), 60%, 35%, 1);*/
+    --base-color: 120;
     --background-color: hsla(var(--base-color), 35%, 40%, 1);
     --click-color: hsla(calc(var(--base-color) + 120), 35%, 40%, 1);
     --hover-color: hsla(calc(var(--base-color) + 270), 60%, 35%, 1);
@@ -29,8 +29,8 @@
 
 body {
     background-color: hsla(120, 35%, 40%, 1);
-    background-color: var(background-color);
-    background-color: var(--background-color);
+    /*background-color: var(background-color);*/
+    /*background-color: var(--background-color);*/
     background-image: url("../images/noise.png");
     padding: 0px;
     margin: 0px;
@@ -40,7 +40,7 @@ body {
 #topbar {
     background: black;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
-    margin-top: 200px;
+    margin-top: 0px;
     color: lightgrey;
     width: calc(100% - 10px);
     padding: 5px;
@@ -51,7 +51,7 @@ body {
 	margin-top: 0px;
 }
 #topbar_ghost {
-	margin-top: 200px;
+	margin-top: 0px;
     width: calc(100% - 10px);
     padding: 5px;
 	display: none;
@@ -82,13 +82,13 @@ body {
 
 a {
 	color: hsla(240, 35%, 40%, 1);
-    color: var(click-color);
+    /*color: var(click-color);*/
 	cursor: pointer;
 }
 a:hover {
 	text-decoration: underline;
 	color: hsla(30, 60%, 35%, 1);
-    color: var(hover-color);
+    /*color: var(hover-color);*/
 }
 a.intern:before {
     content: "";

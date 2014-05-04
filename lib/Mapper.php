@@ -8,13 +8,52 @@
 class Mapper {
 
     protected static $tableName = null;
-    protected static $tableData = array();
+    protected static $tableData = array(
+        /*
+        'PK' => array("xyz"),
+        'fields' => array(
+            'fieldname' => array(
+                'type' => "integer",
+                'null' => true,
+                'default' => null|string
+            )
+        ),
+        'foreignkeys' => array(
+            array(
+                'fields' => array("field1", "field2"),
+                'table' => "tablename",
+                'foreignfields' => array("field3", "field4")
+            )
+        )
+        */
+    );
 
     protected $data = array();
     protected $dbData = array();
 
     static protected function fetchTableData() {
-
+        $database = $GLOBALS['databaseType'];
+        $db = DBManager::getInstance();
+        switch ($database) {
+            case "mysql":
+                $query = "SHOW COLUMNS FROM `".self::$tableName."` ";
+                $data = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($data as $row) {
+                    self::$tableData['fields'][$data['Field']] = array(
+                        'type' => $data['Field'],
+                        'null' => $data['Null'] === "YES" ? true : false,
+                        'default' => $data['Default']
+                    );
+                    if ($data['Key'] === "PRI") {
+                        self::$tableData['PK'] = array($data['Field']);
+                    }
+                }
+                break;
+            case "sqlite";
+                break;
+            case "postgre":
+                break;
+        }
     }
 
     public function __construct($id = null) {

@@ -29,6 +29,9 @@ while (($file = readdir($configdir)) !== false) {
 }
 closedir($configdir);
 
+require_once __DIR__."/../lib/DBManager.php";
+require_once __DIR__."/../lib/Mapper.php";
+
 //load plugins
 require_once __DIR__."/../lib/ModuleManager.php";
 $moduleManager = new ModuleManager(__DIR__."/../modules");
@@ -67,6 +70,8 @@ if (isset($_SERVER['CONTEXT_PREFIX'])) {
 if ($route === "/") {
     $route = "/stream/everything/index";
 }
+
+var_dump(DBManager::getInstance()->query("SHOW TABLES")->fetchAll(PDO::FETCH_ASSOC));
 
 $routed = $router->processRouting($route);
 
