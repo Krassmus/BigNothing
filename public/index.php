@@ -71,8 +71,6 @@ if ($route === "/") {
     $route = "/stream/everything/index";
 }
 
-var_dump(DBManager::getInstance()->query("SHOW TABLES")->fetchAll(PDO::FETCH_ASSOC));
-
 $routed = $router->processRouting($route);
 
 if (!$routed) {
