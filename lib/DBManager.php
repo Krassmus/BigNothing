@@ -13,18 +13,44 @@ class DBManager {
     static public function getInstance($connectionName = null) {
         if ($connectionName === null) {
             if (!self::$masterConnection) {
-                self::$masterConnection = new PDO(
-                    $GLOBALS['databaseType'].":dbname=".$GLOBALS['databaseName'],
-                    $GLOBALS['databaseUser'],
-                    $GLOBALS['databasePass']
-                );
+                self::$masterConnection = self::openConnectionFromConfig($connectionName);
             }
             return self::$masterConnection;
         } else {
             if (!isset(self::$slaveConnections[$connectionName])) {
-
+                self::$slaveConnections[$connectionName] = self::openConnectionFromConfig($connectionName);
             }
             return self::$slaveConnections[$connectionName];
         }
+    }
+
+    static protected function openConnectionFromConfig($connectionName = "master") {
+        if (!isset($GLOBALS['DATABASE'][$connectionName])) {
+            $connectionName = "master";
+        }
+        $connection = null;
+        switch ($GLOBALS['DATABASE'][$connectionName]['type']) {
+            case "mysql":
+                $connection = new PDO(
+                    "mysql:dbname=".$GLOBALS['DATABASE'][$connectionName]['name'],
+                    $GLOBALS['DATABASE'][$connectionName]['user'],
+                    $GLOBALS['DATABASE'][$connectionName]['pass']
+                );
+                break;
+            case "sqlite":
+                $connection = new PDO(
+                    "sqlite:".$GLOBALS['DATABASE'][$connectionName]['path']
+                );
+                break;
+            case "postgre":
+            case "postgres":
+            case "postgresql":
+            case "pgsql":
+                $connection = new PDO(
+                    "pgsql:dbname=".$GLOBALS['DATABASE'][$connectionName]['name'].";user=".$GLOBALS['DATABASE'][$connectionName]['user'].";password".$GLOBALS['DATABASE'][$connectionName]['pass']
+                );
+                break;
+        }
+        return $connection;
     }
 }
