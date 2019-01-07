@@ -13,4 +13,8 @@ class Login extends \Controller {
         $this->test = "hallo welt";
         $this->renderView();
     }
+
+    public function registerAction() {
+        $this->renderView();
+    }
 }

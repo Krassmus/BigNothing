@@ -9,10 +9,10 @@ function escapeHtml($text) {
     return htmlentities($text, ENT_COMPAT, "UTF-8");
 }
 
-$GLOBALS['URI'] = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-$GLOBALS['URI'] .= "://".$_SERVER['SERVER_NAME'];
+$GLOBALS['URL'] = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$GLOBALS['URL'] .= "://".$_SERVER['SERVER_NAME'];
 if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' && $_SERVER['SERVER_PORT'] != 443) ||
     (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'on' && $_SERVER['SERVER_PORT'] != 80)) {
-    $GLOBALS['URI'] .= ':'.$_SERVER['SERVER_PORT'];
+    $GLOBALS['URL'] .= ':'.$_SERVER['SERVER_PORT'];
 }
-$GLOBALS['URI'] .= dirname($_SERVER['PHP_SELF'])."/";
+$GLOBALS['URL'] .= dirname($_SERVER['PHP_SELF'])."/";

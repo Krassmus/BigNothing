@@ -15,6 +15,7 @@ require_once __DIR__."/../lib/Controller.php";
 require_once __DIR__."/../lib/AuthenticatedController.php";
 Template::setRootPath(__DIR__."/../");
 require_once __DIR__."/../lib/Icon.php";
+require_once __DIR__."/../lib/URL.php";
 require_once __DIR__."/../lib/error_handler.php";
 
 //configs
@@ -71,7 +72,7 @@ if ($route === "/") {
     $route = "/stream/everything/index";
 }
 
-var_dump(DBManager::getInstance()->query("SHOW TABLES")->fetchAll(PDO::FETCH_ASSOC));
+//var_dump(DBManager::getInstance()->query("SHOW TABLES")->fetchAll(PDO::FETCH_ASSOC));
 
 $routed = $router->processRouting($route);
 

@@ -10,7 +10,7 @@ class Mapper {
     protected static $tableName = null;
     protected static $tableData = array(
         /*
-        'PK' => array("xyz"),
+        'primaryKeys' => array("xyz"),
         'fields' => array(
             'fieldname' => array(
                 'type' => "integer",
@@ -18,7 +18,7 @@ class Mapper {
                 'default' => null|string
             )
         ),
-        'foreignkeys' => array(
+        'foreignKeys' => array(
             array(
                 'fields' => array("field1", "field2"),
                 'table' => "tablename",
@@ -34,18 +34,19 @@ class Mapper {
     static protected function fetchTableData() {
         $database = $GLOBALS['databaseType'];
         $db = DBManager::getInstance();
+        $tableName = self::$tableName;
         switch ($database) {
             case "mysql":
-                $query = "SHOW COLUMNS FROM `".self::$tableName."` ";
+                $query = "SHOW COLUMNS FROM `".$tableName."` ";
                 $data = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($data as $row) {
-                    self::$tableData['fields'][$data['Field']] = array(
+                    self::$tableData[$tableName]['fields'][$data['Field']] = array(
                         'type' => $data['Field'],
                         'null' => $data['Null'] === "YES" ? true : false,
                         'default' => $data['Default']
                     );
                     if ($data['Key'] === "PRI") {
-                        self::$tableData['PK'] = array($data['Field']);
+                        self::$tableData[$tableName]['primaryKeys'][] = $data['Field'];
                     }
                 }
                 break;

@@ -14,6 +14,10 @@
     font-family: 'Entypo';
     src: url(../fonts/entypo.ttf);
 }
+@font-face {
+    font-family: 'Mulders Handwriting';
+    src: url(../fonts/mulders-handwriting.ttf);
+}
 
 :root {
     /*var-base-color: 120;
@@ -31,7 +35,12 @@ body {
     background-color: hsla(120, 35%, 40%, 1);
     /*background-color: var(background-color);*/
     /*background-color: var(--background-color);*/
-    background-image: url("../images/noise.png");
+    /* background-image: url("../images/noise.png"); */
+    background: linear-gradient(0, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url("../images/amplifier.jpeg");
+    background-size: 100vw 100vh, auto auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-color: black;
     padding: 0px;
     margin: 0px;
     font-family: Source Sans Pro;
@@ -44,6 +53,8 @@ body {
     color: lightgrey;
     width: calc(100% - 10px);
     padding: 5px;
+    font-family: Mulders Handwriting;
+    font-size: 1.3em;
 }
 .fixed #topbar {
 	position: fixed;
@@ -110,6 +121,7 @@ a.extern:before {
 }
 h1, h2, h3 {
 	color: rgba(60,60,60,1);
+    font-family: Mulders Handwriting;
 }
 h1, h2 {
 	border-bottom: 2px solid rgba(0,0,0,0.4);

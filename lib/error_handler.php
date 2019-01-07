@@ -9,6 +9,6 @@ require_once __DIR__."/exceptions/NotLoggedInException.php";
 
 set_exception_handler(function ($exception) {
     if (is_a($exception, "NotLoggedInException")) {
-        header("Location: ".$GLOBALS['URI']."authentication/login");
+        header("Location: ".URL::create("authentication/login"));
     }
 });
