@@ -6,4 +6,4 @@ Now a module is just a php-script that follows some rules. It should completely 
 
 * **`assets/`** - Here we have all kind of javascripts, stylesheets and images.
 * **`controller/`** - here we expect to be some controllers that render pages. The module should use controllers for all kinds of actions, pages and requests.
-* **`mypluginname.php`** - the main module file with a class that is named `mypluginname` and must extend the class `Module`.
+* **`Mypluginname.php`** - the main module file with a class that is named `mypluginname` and must extend the class `Module`.
