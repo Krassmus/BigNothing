@@ -34,8 +34,9 @@ class ModuleManager {
 
     public function setUpModuleHooks() {
         foreach ($this->moduleClasses as $module) {
-            if (class_exists($module)) {
-                $module::setUpModuleHooks();
+            $module_class = "\\".ucfirst($module)."\\".ucfirst($module);
+            if (class_exists($module_class)) {
+                $module_class::setUpModuleHooks();
             }
         }
     }

@@ -28,7 +28,7 @@
 $GLOBALS['DATABASE'] = array(
     'master' => array(
         'type' => "mysql",
-        'name' => "bignothing_bn1",
+        'name' => "bignothing",
         'user' => "root",
         'pass' => ""
     )

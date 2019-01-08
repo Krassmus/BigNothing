@@ -6,6 +6,21 @@
  */
 
 namespace Authentication;
-class Authentication extends \Module {
 
+class Authentication extends \Module
+{
+    public static function setUpModuleHooks()
+    {
+        \HookCenter::register(
+            "LoginAuthenticationHook",
+            "\\Authentication\\Authentication::authenticateUser"
+        );
+    }
+
+    public static function authenticateUser($hook)
+    {
+        if ($hook->getLogin() && $hook->getPassword()) {
+            $hook->authenticateLogin(true);
+        }
+    }
 }

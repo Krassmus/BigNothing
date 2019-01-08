@@ -49,7 +49,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     include_once __DIR__."/../lib/hooks/LoginAuthenticationHook.php";
     $loginAuthentication = new LoginAuthenticationHook($_POST['login'], $_POST['password']);
     $loginAuthentication = HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
-    if ($loginAuthentication->isAuthentivated()) {
+    if ($loginAuthentication->isAuthenticated()) {
         session_start();
         $_SESSION['currentLogin'] = true;
     } else {
