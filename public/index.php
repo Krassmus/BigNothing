@@ -44,19 +44,26 @@ $pluginManager->loadModules();
 $moduleManager->setUpModuleHooks();
 $pluginManager->setUpModuleHooks();
 
+$route = $_SERVER['REQUEST_URI'];
+if (isset($_SERVER['CONTEXT_PREFIX'])) {
+    $route = substr($route, strlen($_SERVER['CONTEXT_PREFIX']) ?: "/");
+}
+
 //init session, login user
 if (isset($_POST['login']) && isset($_POST['password'])) {
     include_once __DIR__."/../lib/hooks/LoginAuthenticationHook.php";
     $loginAuthentication = new LoginAuthenticationHook($_POST['login'], $_POST['password']);
     $loginAuthentication = HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
+
     if ($loginAuthentication->isAuthenticated()) {
         session_start();
         $_SESSION['currentLogin'] = true;
+        $route = "/stream/everything/index";
+
     } else {
         unset($_SESSION);
     }
 }
-
 require_once __DIR__.'/../lib/RouterManager.php';
 $router = RouterManager::getRouter($moduleManager, $pluginManager);
 
@@ -64,16 +71,11 @@ $router = RouterManager::getRouter($moduleManager, $pluginManager);
 $moduleManager->initModules();
 $pluginManager->initModules();
 
-$route = $_SERVER['REQUEST_URI'];
-if (isset($_SERVER['CONTEXT_PREFIX'])) {
-    $route = substr($route, strlen($_SERVER['CONTEXT_PREFIX']) ?: "/");
-}
 if ($route === "/") {
     $route = "/stream/everything/index";
 }
 
 //var_dump(DBManager::getInstance()->query("SHOW TABLES")->fetchAll(PDO::FETCH_ASSOC));
-
 $routed = $router->processRouting($route);
 
 if (!$routed) {

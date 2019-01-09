@@ -28,13 +28,10 @@ class Router {
                 return true;
             }
         }
-        $currentRoute = explode("/", $currentRoute);
-        while (count($currentRoute) > 0 && !trim($currentRoute[0])) {
-            array_shift($currentRoute);
-        }
+        $currentRoute = preg_split("/\//", $currentRoute, -1, PREG_SPLIT_NO_EMPTY);
         $vars = array_slice($currentRoute, 3);
 
-        if ($currentRoute[0] === "plugins") {
+        if ($currentRoute[0] === "plugin") {
             array_shift($currentRoute);
             if (!isset($currentRoute[1])) {
                 return false;
