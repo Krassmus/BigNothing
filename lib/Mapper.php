@@ -5,7 +5,7 @@
  * obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class Mapper {
+class Mapper implements ArrayAccess {
 
     protected static $db = null;
     protected static $tableName = null;
@@ -67,5 +67,26 @@ class Mapper {
         if (!count(self::$tableData)) {
             self::fetchTableData();
         }
+    }
+
+
+
+    public function offsetExists($offset) {
+        return isset(self::$tableData['fields'][$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->data[$offset];
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->data[$offset] = $value;
+    }
+
+    public function offsetUnset($offset)
+    {
+        $this->data[$offset] = null;
     }
 }
