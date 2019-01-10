@@ -32,6 +32,7 @@ closedir($configdir);
 
 require_once __DIR__."/../lib/DBManager.php";
 require_once __DIR__."/../lib/Mapper.php";
+Mapper::setPDO(DBManager::getInstance());
 
 //load plugins
 require_once __DIR__."/../lib/ModuleManager.php";

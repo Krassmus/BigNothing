@@ -7,6 +7,7 @@
 
 class Mapper {
 
+    protected static $db = null;
     protected static $tableName = null;
     protected static $tableData = array(
         /*
@@ -31,9 +32,14 @@ class Mapper {
     protected $data = array();
     protected $dbData = array();
 
+    static public function setPDO(PDO $pdo)
+    {
+        self::$db = $pdo;
+    }
+
     static protected function fetchTableData() {
         $database = $GLOBALS['databaseType'];
-        $db = DBManager::getInstance();
+        $db = self::$db;
         $tableName = self::$tableName;
         switch ($database) {
             case "mysql":
