@@ -5,11 +5,20 @@
  * obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+
+/**
+ * Class DBManager the manager of the main database connections. Holds PDO-objects as singletons.
+ */
 class DBManager {
 
     static protected $slaveConnections = array();
     static protected $masterConnection = null;
 
+    /**
+     * Returns a PDO-object with the given connection or null if it failed.
+     * @param string|null $connectionName : name of the connection or null if we want the master.
+     * @return PDO|null
+     */
     static public function getInstance($connectionName = null) {
         if ($connectionName === null) {
             if (!self::$masterConnection) {
@@ -19,6 +28,9 @@ class DBManager {
         } else {
             if (!isset(self::$slaveConnections[$connectionName])) {
                 self::$slaveConnections[$connectionName] = self::openConnectionFromConfig($connectionName);
+            }
+            if (!isset(self::$slaveConnections[$connectionName])) {
+                return self::getInstance();
             }
             return self::$slaveConnections[$connectionName];
         }

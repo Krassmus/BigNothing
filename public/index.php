@@ -7,7 +7,6 @@
 
 //painless requirements
 require_once __DIR__."/../lib/general_functions.php";
-require_once __DIR__."/../lib/EventCenter.php";
 require_once __DIR__."/../lib/HookCenter.php";
 require_once __DIR__."/../lib/Template.php";
 require_once __DIR__."/../lib/Module.php";
