@@ -5,7 +5,7 @@
  * obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-class Mapper implements ArrayAccess {
+class ORMapper implements ArrayAccess, Iterator {
 
     protected static $db = null;
     protected static $tableName = null;
@@ -30,29 +30,30 @@ class Mapper implements ArrayAccess {
     );
 
     protected $data = array();
-    protected $dbData = array();
+    protected $ormapper_db_data = array();
+    protected $ormapper_iterator = 0;
 
-    static public function setPDO(PDO $pdo)
+    static public function ormapper_setPDO(PDO $pdo)
     {
-        self::$db = $pdo;
+        self::$ormapper_db = $pdo;
     }
 
-    static protected function fetchTableData() {
+    static protected function ormapper_fetchTableData() {
         $database = $GLOBALS['databaseType'];
-        $db = self::$db;
+        $db = self::$ormapper_db;
         $tableName = self::$tableName;
         switch ($database) {
             case "mysql":
                 $query = "SHOW COLUMNS FROM `".$tableName."` ";
                 $data = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($data as $row) {
-                    self::$tableData[$tableName]['fields'][$data['Field']] = array(
-                        'type' => $data['Field'],
-                        'null' => $data['Null'] === "YES" ? true : false,
+                    self::$tableData[$tableName]['fields'][$row['Field']] = array(
+                        'type' => $row['Field'],
+                        'null' => $row['Null'] === "YES" ? true : false,
                         'default' => $data['Default']
                     );
                     if ($data['Key'] === "PRI") {
-                        self::$tableData[$tableName]['primaryKeys'][] = $data['Field'];
+                        self::$tableData[$tableName]['primaryKeys'][] = $row['Field'];
                     }
                 }
                 break;
@@ -65,8 +66,26 @@ class Mapper implements ArrayAccess {
 
     public function __construct($id = null) {
         if (!count(self::$tableData)) {
-            self::fetchTableData();
+            self::ormapper_fetchTableData();
         }
+
+    }
+
+    /**
+     * Fetches data from the database or initializes the values.
+     */
+    public function ormapper_fetch()
+    {
+        if ($this->ormapper_pk) {
+
+        } else {
+            
+        }
+    }
+
+    public function save()
+    {
+
     }
 
 
@@ -88,5 +107,18 @@ class Mapper implements ArrayAccess {
     public function offsetUnset($offset)
     {
         $this->data[$offset] = null;
+    }
+
+    public function current () {
+        return $this->data[$this->ormapper_iterator];
+    }
+    public function key () {
+        return $this->ormapper_iterator;
+    }
+    public function next () {}
+    public function rewind () {}
+
+    public function valid () {
+        return isset($this->data[$this->ormapper_iterator]);
     }
 }

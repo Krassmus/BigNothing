@@ -31,8 +31,8 @@ while (($file = readdir($configdir)) !== false) {
 closedir($configdir);
 
 require_once __DIR__."/../lib/DBManager.php";
-require_once __DIR__."/../lib/Mapper.php";
-Mapper::setPDO(DBManager::getInstance());
+require_once __DIR__ . "/../lib/ORMapper.php";
+ORMapper::ormapper_setPDO(DBManager::getInstance());
 
 //load plugins
 require_once __DIR__."/../lib/ModuleManager.php";
@@ -51,19 +51,21 @@ if (isset($_SERVER['CONTEXT_PREFIX'])) {
 }
 
 //init session, login user
+session_start();
 if (isset($_POST['login']) && isset($_POST['password'])) {
     include_once __DIR__."/../lib/hooks/LoginAuthenticationHook.php";
     $loginAuthentication = new LoginAuthenticationHook($_POST['login'], $_POST['password']);
     $loginAuthentication = HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
 
     if ($loginAuthentication->isAuthenticated()) {
-        session_start();
         $_SESSION['currentLogin'] = true;
         $route = "/stream/everything/index";
-
     } else {
         unset($_SESSION);
     }
+}
+if (isset($_POST['logout'])) {
+    unset($_SESSION);
 }
 require_once __DIR__.'/../lib/RouterManager.php';
 $router = RouterManager::getRouter($moduleManager, $pluginManager);

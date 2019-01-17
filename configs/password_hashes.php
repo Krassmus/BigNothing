@@ -6,5 +6,10 @@
  */
 
 function hashPassword($password) {
-	return bcrypt($password);
+	return password_hash($password, PASSWORD_BCRYPT, array(
+        'cost' => 12
+    ));
+}
+function verifyPassword($password, $hash) {
+    return password_verify($password, $hash);
 }
