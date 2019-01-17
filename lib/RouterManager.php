@@ -14,6 +14,13 @@ class RouterManager {
 
 	static $router = null;
 
+    /**
+     * Get the singleton routing-object.
+     *
+     * @param $moduleManager
+     * @param $pluginManager
+     * @return Router|null
+     */
 	static public function getRouter($moduleManager, $pluginManager) {
 		if (self::$router === null) {
 			self::$router = new Router($moduleManager, $pluginManager);

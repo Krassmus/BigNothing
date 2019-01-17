@@ -17,6 +17,11 @@ class Authentication extends \Module
         );
     }
 
+    /**
+     * Authenticates the user against the database with username=login and password, which should match the hash.
+     * As a hash bcrypt and md5 are possible, though bcrypt is preferred.
+     * @param LoginAuthenticationHook $hook : The hook object with login and cleartext password as transferred by use REQUEST variable.
+     */
     public static function authenticateUser($hook)
     {
         if ($hook->getLogin() && $hook->getPassword()) {
@@ -31,6 +36,8 @@ class Authentication extends \Module
             if ($data['password_hash'] === hashPassword($hook->getPassword())) {
                 $hook->authenticateLogin(true);
             } elseif($data['password_hash'] === md5($hook->getPassword())) {
+                //this is for developers - we can insert md5-hashes as passwords into the users table.
+                //With the first login-attempt we change it to a bcrypt-password hash.
                 $hook->authenticateLogin(true);
                 //change md5-password
                 $newpassword = hashPassword($hook->getPassword());
