@@ -164,3 +164,19 @@ ul.activitystream > li:last-child {
 }
 
 
+button {
+    display: inline-block;
+    border: none;
+    min-width: 150px;
+    min-height: 30px;
+    max-height: 30px;
+    text-align: center;
+    color: white;
+    background-color: black;
+    margin: 10px;
+    cursor: pointer;
+}
+.buttons {
+    text-align: center;
+    padding: 10px;
+}

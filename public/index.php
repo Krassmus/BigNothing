@@ -30,8 +30,10 @@ while (($file = readdir($configdir)) !== false) {
 closedir($configdir);
 
 require_once __DIR__."/../lib/DBManager.php";
-require_once __DIR__ . "/../lib/ORMapper.php";
-ORMapper::ormapper_setPDO(DBManager::getInstance());
+require_once __DIR__ . "/../lib/ORM.php";
+ORM::orm_setPDO(DBManager::getInstance());
+
+require_once  __DIR__."/../lib/models/Login.php";
 
 //load plugins
 require_once __DIR__."/../lib/ModuleManager.php";
@@ -77,7 +79,6 @@ if ($route === "/") {
     $route = "/stream/everything/index";
 }
 
-//var_dump(DBManager::getInstance()->query("SHOW TABLES")->fetchAll(PDO::FETCH_ASSOC));
 $routed = $router->processRouting($route);
 
 if (!$routed) {

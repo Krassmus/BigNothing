@@ -44,6 +44,7 @@ abstract class Module {
             if (class_exists($controllerClass)) {
                 $controller = new $controllerClass();
                 $controller->performAction($action, $vars);
+                return true;
             }
         }
     }

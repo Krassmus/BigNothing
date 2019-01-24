@@ -20,6 +20,7 @@
 </style>
 
     <form action="?" method="POST" id="loginform">
+        <? Login::orm_fetchTableData() ?>
         <h1><?= _("#Welcome on board ...") ?></h1>
         <table>
             <tbody>
