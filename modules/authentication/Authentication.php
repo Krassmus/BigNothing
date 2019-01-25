@@ -26,23 +26,18 @@ class Authentication extends \Module
     {
         if ($hook->getLogin() && $hook->getPassword()) {
 
-            $db = \DBManager::getInstance();
-            $statement = $db->prepare("
-                SELECT * 
-                FROM logins 
-                WHERE username = :login
-            ");
-            $statement->execute(array('login' => $hook->getLogin()));
-            $data = $statement->fetch(\PDO::FETCH_ASSOC);
-            if (verifyPassword($hook->getPassword(), $data['password_hash'])) {
+            $login = new Login($hook->getLogin());
+            if (verifyPassword($hook->getPassword(), $login['password_hash'])) {
                 $hook->authenticateLogin(true);
-            } elseif($data['password_hash'] === md5($hook->getPassword())) {
+            } elseif($login['password_hash'] === md5($hook->getPassword())) {
                 //this is for developers - we can insert md5-hashes as passwords into the users table.
                 //With the first login-attempt we change it to a bcrypt-password hash.
                 $hook->authenticateLogin(true);
 
                 //change md5-password
                 $newpassword = hashPassword($hook->getPassword());
+                $login['password_hash'] = $newpassword;
+                $login->store();
                 $statement = $db->prepare("
                     UPDATE logins
                     SET password_hash = :newpassword 

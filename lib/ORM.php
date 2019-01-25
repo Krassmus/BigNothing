@@ -88,6 +88,11 @@ class ORM implements ArrayAccess, Iterator {
         return self::$orm_configs[$class]['table'];
     }
 
+    static public function orm_getPK() {
+        $tableName = self::orm_getTableName();
+        return self::$orm_tableData[$tableName]['primaryKeys'];
+    }
+
     static public function orm_fetchTableData() {
         $db = self::$orm_db;
         $database = $db->getAttribute(PDO::ATTR_DRIVER_NAME);
@@ -123,26 +128,109 @@ class ORM implements ArrayAccess, Iterator {
                     break;
             }
         }
+        if (!isset(self::$orm_tableData[$tableName]['primaryKeys']) || !count(self::$orm_tableData[$tableName]['primaryKeys'])) {
+            throw new Exception("DB-Table '$tableName' has no primary key.");
+        }
     }
 
-    public function __construct($id = null) {
-        if (!count(self::$orm_tableData)) {
-            self::orm_fetchTableData();
-        }
+    /**
+     * Static constructor method for this who like to get an object in a static way.
+     * @param mixed $id : null for new objects, string or integer for objects or array if the primary key has more than one row.
+     * @return object of this called class.
+     */
+    static public function get($id = null) {
+        $class = get_called_class();
+        $object = new $class($id);
+        return $object;
+    }
 
+    static public function getExisting($data = array()) {
+        $class = get_called_class();
+        $object = new $class();
+        foreach ($data as $index => $value) {
+            $object[$index] = $value;
+        }
+        $this->orm_resetDBData();
+        return $object;
+    }
+
+    /**
+     * Constructor to initiate new or existing objects of this class.
+     * @param mixed $id : null for new objects, string or integer for objects or array if the primary key has more than one row.
+     * @throws Exception if class has no correct orm_setup method like a missing table attribute.
+     */
+    public function __construct($id = null) {
+        self::orm_fetchTableData();
+        $pk = self::orm_getPK();
+        if (is_array($id)) {
+            foreach ($id as $index => $value) {
+                if (is_numeric($index)) {
+                    $this[$pk[$index]] = $value;
+                } else {
+                    $this[$index] = $value;
+                }
+            }
+        } else {
+            if (count($pk) === 1) {
+                $this[$pk[0]] = $id;
+            }
+        }
+        $this->orm_fetch();
     }
 
     /**
      * Fetches data from the database or initializes the values.
+     * @param bool $restore : if true all data in $this->orm_data will be overwritten by the database
      */
-    public function orm_fetch()
+    public function orm_fetch($restore = false)
     {
-        if ($this->orm_pk) {
-
-        } else {
-            $tableName = self::orm_getTableName();
-            throw new Exception("DB-Table '$tableName' has no primary key.");
+        $pk = self::orm_getPK();
+        $is_new = false;
+        $tableName = self::orm_getTableName();
+        foreach ($pk as $index => $pk_row) {
+            if ($this->orm_data[$pk_row] === null) {
+                $is_new = true;
+                break;
+            }
         }
+        if (!$is_new) {
+            $sql = "SELECT * 
+                    FROM `" . $tableName . "`
+                    WHERE ";
+            $params = array();
+            foreach ($pk as $index => $pk_row) {
+                if ($index > 0) {
+                    $sql .= "AND ";
+                }
+                $sql .= "`" . $pk_row . "` = ? ";
+                $params[] = $this->orm_data[$pk_row];
+            }
+            $statement = self::$orm_db->prepare($sql);
+            $statement->execute($params);
+            $this->orm_db_data = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($restore) {
+                $this->orm_data = $this->orm_db_data;
+            } else {
+                foreach ($this->orm_db_data as $key => $value) {
+                    if (!isset($this[$key])) {
+                        $this[$key] = $value;
+                    }
+                }
+            }
+        } else {
+            //setting the default values for a new object
+            foreach (self::$orm_tableData[$tableName]['fields'] as $field => $fielddata) {
+                $this[$field] = $fielddata;
+            }
+        }
+    }
+
+    /**
+     * Resets the internal $orm_db_data data with the internal $orm_data variable.
+     * Do this only if you are sure that you know what's in the database.
+     */
+    public function orm_resetDBData() {
+        $this->orm_db_data = $this->orm_data;
     }
 
     /**
@@ -150,7 +238,59 @@ class ORM implements ArrayAccess, Iterator {
      */
     public function store()
     {
+        $pk = self::orm_getPK();
+        $is_new = false;
+        $tableName = self::orm_getTableName();
+        foreach ($pk as $index => $pkrow) {
+            if ($this->orm_data[$pkrow] === null) {
+                $is_new = true;
+                break;
+            }
+        }
+        if ($is_new) {
+            $sql = "INSERT INTO `".$tableName."`
+                    SET ";
+            $params = array();
+            $i = 0;
+            foreach (self::$orm_tableData[$tableName]['fields'] as $field => $fielddata) {
+                if ($i > 0) {
+                    $sql .= ", ";
+                }
+                $sql .= "`".$field."` = :".md5($field)." ";
+                $params[md5($field)] = $this[$field];
+                $i++;
+            }
+        } else {
+            $sql = "UPDATE `".$tableName."` SET ";
+            $i = 0;
+            $params = array();
+            foreach (self::$orm_tableData[$tableName]['fields'] as $field => $fielddata) {
+                if (!in_array($field, $pk) && ($this->orm_data[$field] !== $this->orm_db_data[$field])) {
+                    if ($i > 0) {
+                        $sql .= ", ";
+                    }
+                    $sql .= "`" . $field . "` = :" . md5($field);
+                    $params[md5($field)] = $this[$field];
+                    $i++;
+                }
+            }
+            $sql = "WHERE ";
+            foreach ($pk as $i => $pkrow) {
+                if ($i > 0) {
+                    $sql .= "AND ";
+                }
+                $sql .= "`".$pkrow."` = :".md5($pkrow)." ";
+                $params[md5($pkrow)] = $this[$pkrow];
+            }
+        }
 
+    }
+
+    /**
+     * Fetches all data from the database and overwrites the existing data in this object.
+     */
+    public function restore() {
+        $this->orm_fetch(true);
     }
 
 

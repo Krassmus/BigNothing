@@ -20,8 +20,9 @@
 </style>
 
     <form action="?" method="POST" id="loginform">
-        <? Login::orm_fetchTableData() ?>
         <h1><?= _("#Welcome on board ...") ?></h1>
+        <? $login = new Login("ras") ?>
+        <?= $login['password_hash'] ?>
         <table>
             <tbody>
             <tr>
