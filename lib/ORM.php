@@ -66,6 +66,7 @@ class ORM implements ArrayAccess, Iterator {
     protected $orm_data = array();
     protected $orm_db_data = array();
     protected $orm_iterator = 0;
+    protected $orm_object_is_new = false;
 
     static public function orm_setPDO(PDO $pdo) {
         self::$orm_db = $pdo;
@@ -150,7 +151,7 @@ class ORM implements ArrayAccess, Iterator {
         foreach ($data as $index => $value) {
             $object[$index] = $value;
         }
-        $this->orm_resetDBData();
+        $object->orm_resetDBData();
         return $object;
     }
 
@@ -208,19 +209,24 @@ class ORM implements ArrayAccess, Iterator {
             $statement = self::$orm_db->prepare($sql);
             $statement->execute($params);
             $this->orm_db_data = $statement->fetch(PDO::FETCH_ASSOC);
+            if (!$this->orm_db_data) {
+                $this->orm_is_new = true;
+                $this->orm_db_data = array();
+            }
             if ($restore) {
                 $this->orm_data = $this->orm_db_data;
             } else {
-                foreach ($this->orm_db_data as $key => $value) {
+                foreach ((array) $this->orm_db_data as $key => $value) {
                     if (!isset($this[$key])) {
                         $this[$key] = $value;
                     }
                 }
             }
-        } else {
-            //setting the default values for a new object
-            foreach (self::$orm_tableData[$tableName]['fields'] as $field => $fielddata) {
-                $this[$field] = $fielddata;
+        }
+        //setting the default values for a new object
+        foreach (self::$orm_tableData[$tableName]['fields'] as $field => $fielddata) {
+            if (!isset($this->orm_data[$field])) {
+                $this[$field] = isset($fielddata['default']) ? $fielddata['default'] : null;
             }
         }
     }

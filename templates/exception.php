@@ -78,14 +78,16 @@ Thanx for helping me
             <? foreach ($exception->getTrace() as $line) : ?>
             <tr>
                 <td>
-                    <a href="https://github.com/Krassmus/BigNothing/blob/master/<?= escapeHtml(stripos($line['file'], $this_dir) === 0
-                        ? substr($line['file'], strlen($this_dir) + 1)
-                        : $line['file']) ?>#L<?= escapeHtml($line['line']) ?>" target="_blank">
-                        <?= escapeHtml(stripos($line['file'], $this_dir) === 0
-                        ? substr($line['file'], strlen($this_dir) + 1)
-                        : $line['file']) ?>
-                        <span style="font-size: 0.8em;">(Line: <?= escapeHtml($line['line']) ?>)</span>
-                    </a>
+                    <? if (isset($line['file']) && isset($line['line'])) : ?>
+                        <a href="https://github.com/Krassmus/BigNothing/blob/master/<?= escapeHtml(stripos($line['file'], $this_dir) === 0
+                            ? substr($line['file'], strlen($this_dir) + 1)
+                            : $line['file']) ?>#L<?= escapeHtml($line['line']) ?>" target="_blank">
+                            <?= escapeHtml(stripos($line['file'], $this_dir) === 0
+                            ? substr($line['file'], strlen($this_dir) + 1)
+                            : $line['file']) ?>
+                            <span style="font-size: 0.8em;">(Line: <?= escapeHtml($line['line']) ?>)</span>
+                        </a>
+                    <? endif ?>
                 </td>
                 <td>
                     <?= escapeHtml($line['function']) ?>(<?
