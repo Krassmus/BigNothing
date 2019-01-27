@@ -19,7 +19,7 @@
 
 </style>
 
-    <form action="?" method="POST" id="loginform">
+    <form action="<?= URL::create("authentication/login/authenticate") ?>" method="POST" id="loginform">
         <h1><?= _("#Welcome on board ...") ?></h1>
         <table>
             <tbody>

@@ -253,6 +253,9 @@ class ORM implements ArrayAccess, Iterator {
     public function __construct($id = null) {
         self::orm_fetchTableData();
         $pk = self::orm_getPK();
+        if (is_string($id) && strpos($id, "-") !== false) {
+            $id = explode("-", $id);
+        }
         if (is_array($id)) {
             foreach ($id as $index => $value) {
                 if (is_numeric($index)) {
@@ -329,6 +332,7 @@ class ORM implements ArrayAccess, Iterator {
      */
     public function orm_resetDBData() {
         $this->orm_db_data = $this->orm_data;
+        $this->orm_object_is_new = false;
     }
 
     /**
@@ -389,6 +393,14 @@ class ORM implements ArrayAccess, Iterator {
             }
         }
 
+    }
+
+    public function getId() {
+        $id = array();
+        foreach (self::orm_getPK() as $pk_row) {
+            $id[] = $this[$pk_row];
+        }
+        return implode("-", $id);
     }
 
     /**

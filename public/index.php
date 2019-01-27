@@ -74,6 +74,9 @@ $pluginManager->setUpModuleHooks();
 $route = $_SERVER['REQUEST_URI'];
 if (isset($_SERVER['CONTEXT_PREFIX'])) {
     $route = substr($route, strlen($_SERVER['CONTEXT_PREFIX']) ?: "/");
+    if (strpos($route, "?") !== false) {
+        $route = substr($route, 0, strpos($route, "?"));
+    }
 }
 
 
@@ -92,10 +95,9 @@ $pluginManager->initModules();
 if ($route === "/") {
     $route = "/stream/everything/index";
 }
-
 $routed = $router->processRouting($route);
 
 if (!$routed) {
-    throw new Exception("404");
+    throw new Exception("404 - Page not found");
 }
 

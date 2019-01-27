@@ -19,12 +19,12 @@ class Login extends \Controller {
 
     public function authenticateAction() { //Should we move these two methods to another module ?
         if (isset($_POST['login']) && isset($_POST['password'])) {
-            $loginAuthentication = new LoginAuthenticationHook(
-                Login::oneBy("username", $_POST['login']),
+            $loginAuthentication = new \LoginAuthenticationHook(
+                \Login::oneBy("username", $_POST['login']),
                 $_POST['login'],
                 $_POST['password']
             );
-            $loginAuthentication = HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
+            $loginAuthentication = \HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
 
             if ($loginAuthentication->isAuthenticated()) {
                 $_SESSION['currentLoginId'] = $loginAuthentication->getLogin()->getId();
@@ -34,7 +34,7 @@ class Login extends \Controller {
                     );
                     $this->renderJSON($output);
                 } else {
-                    redirect("/stream/everything/index");
+                    redirect("stream/everything/index");
                 }
             } else {
                 unset($_SESSION);

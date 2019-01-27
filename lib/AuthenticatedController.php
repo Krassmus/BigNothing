@@ -23,7 +23,7 @@ abstract class AuthenticatedController extends Controller {
      * @param array $vars : an associative array with variables in the form array('user' => $user)
      */
     public function performAction($action, $vars = array()) {
-        if (!isset($_SESSION) || !$_SESSION['currentLogin']) {
+        if (!isset($_SESSION) || !$_SESSION['currentLoginId']) {
             throw new NotLoggedInException();
         }
         parent::performAction($action, $vars);
