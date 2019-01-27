@@ -21,9 +21,6 @@
 
     <form action="?" method="POST" id="loginform">
         <h1><?= _("#Welcome on board ...") ?></h1>
-        <? $login = new Login("ras") ?>
-        <? $login['password_hash'] = md5("testing") ?>
-        <? $login->store() ?>
         <table>
             <tbody>
             <tr>

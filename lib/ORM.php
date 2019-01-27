@@ -63,15 +63,26 @@ class ORM implements ArrayAccess, Iterator {
         */
     );
 
-    protected $orm_data = array();
-    protected $orm_db_data = array();
+    protected $orm_data = array(); //the data of this object
+    protected $orm_db_data = array(); //the data that is considered to be in the database
     protected $orm_iterator = 0;
-    protected $orm_object_is_new = false;
+    protected $orm_object_is_new = false; //indicates if this object is already in database (false) or a new object (true).
 
+    /**
+     * Injects a PDO object into the ORM class so that all ORM classes have access to the database.
+     * @param PDO $pdo
+     */
     static public function orm_setPDO(PDO $pdo) {
         self::$orm_db = $pdo;
     }
 
+    /**
+     * The static setup method for each ORM class. Each ORM subclass needs to override this
+     * method and say parent::orm_setup($configs); at the end so that the class is
+     * configured. Each class needs to at least declare a database-table upon that it
+     * operates.
+     * @param array $configs
+     */
     static protected function orm_setup($configs = array()) {
         $class = get_called_class();
         self::$orm_configs[$class] = $configs;
@@ -89,11 +100,84 @@ class ORM implements ArrayAccess, Iterator {
         return self::$orm_configs[$class]['table'];
     }
 
+    /**
+     * Gets an array with all rows that are part of the primary key.
+     * @return array of strings
+     */
     static public function orm_getPK() {
         $tableName = self::orm_getTableName();
         return self::$orm_tableData[$tableName]['primaryKeys'];
     }
 
+    /**
+     * Finds all objects matching the sql-condition and parameters.
+     *
+     * For example Login::manyBy("email = ?", array("me@somemail.com")); finds all logins with the given email adress.
+     *
+     * You can also use the shorthand syntax Login::manyBy("email", "me@somemail");
+     *
+     * @param string $sql : an sql where condition like 'username = ?' or "username = :uname" in prepared statements
+     * @param mixed $params : associative array of parameters. In short syntax this is not an array, but will be used as the first ?-parameter
+     * @return array of called class-objects
+     * @throws Exception if there is an sql-error.
+     */
+    static public function manyBy($sql, $params = array()) {
+        self::orm_fetchTableData();
+        $tableName = self::orm_getTableName();
+        $class = get_called_class();
+        if (!is_array($params)) {
+            $params = array($params);
+        }
+        if (isset(self::$orm_tableData[$tableName]['fields'][$sql])) {
+            //this is the short syntax. We transform it into the real syntax
+            $sql = "`".$sql."` = ? ";
+        }
+        $sql = "SELECT `".$tableName."`.* FROM `".$tableName."` WHERE ".$sql;
+        $statement = self::$orm_db->prepare($sql);
+        $statement->execute($params);
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = array();
+        foreach ($data as $d) {
+            $result[] = $class::getExisting($d);
+        }
+        return $result;
+    }
+
+    /**
+     * Finds one object matching the sql-condition and parameters.
+     *
+     * For example Login::oneBy("email = ?", array("me@somemail.com")); finds one logins with the given email adress.
+     *
+     * You can also use the shorthand syntax Login::oneBy("email", "me@somemail");
+     *
+     * @param string $sql : an sql where condition like 'username = ?' or "username = :uname" in prepared statements
+     * @param mixed $params : associative array of parameters. In short syntax this is not an array, but will be used as the first ?-parameter
+     * @return null|ORM : object of called class or null if no object fits the sql-clause.
+     * @throws Exception if there is an sql-error.
+     */
+    static public function oneBy($sql, $params = array()) {
+        self::orm_fetchTableData();
+        $tableName = self::orm_getTableName();
+        $class = get_called_class();
+        if (isset(self::$orm_tableData[$tableName]['fields'][$sql])) {
+            //this is the short syntax. We transform it into the real syntax
+            $sql = "`".$sql."` = ? ";
+        }
+        if (!is_array($params)) {
+            $params = array($params);
+        }
+
+        $sql = "SELECT `".$tableName."`.* FROM `".$tableName."` WHERE ".$sql." LIMIT 1";
+        $statement = self::$orm_db->prepare($sql);
+        $statement->execute($params);
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        return $data ? $class::getExisting($data) : null;
+    }
+
+    /**
+     * Fetches the important information about the database-table.
+     * @throws Exception if the table has no primary key.
+     */
     static public function orm_fetchTableData() {
         $db = self::$orm_db;
         $database = $db->getAttribute(PDO::ATTR_DRIVER_NAME);
@@ -145,6 +229,12 @@ class ORM implements ArrayAccess, Iterator {
         return $object;
     }
 
+    /**
+     * Creates an object of this class with the given data of the associative array. The data have to be
+     * corresponding to an existing database-object.
+     * @param array $data : associative array like from ->fetch(PDO::FETCH_ASSOC)
+     * @return ORM : object of called class.
+     */
     static public function getExisting($data = array()) {
         $class = get_called_class();
         $object = new $class();
@@ -186,7 +276,6 @@ class ORM implements ArrayAccess, Iterator {
     public function orm_fetch($restore = false)
     {
         $pk = self::orm_getPK();
-        $is_new = false;
         $tableName = self::orm_getTableName();
         foreach ($pk as $index => $pk_row) {
             if ($this->orm_data[$pk_row] === null) {
@@ -194,7 +283,7 @@ class ORM implements ArrayAccess, Iterator {
                 break;
             }
         }
-        if (!$is_new) {
+        if (!$this->orm_object_is_new) {
             $sql = "SELECT * 
                     FROM `" . $tableName . "`
                     WHERE ";
@@ -209,10 +298,7 @@ class ORM implements ArrayAccess, Iterator {
             $statement = self::$orm_db->prepare($sql);
             $statement->execute($params);
             $this->orm_db_data = $statement->fetch(PDO::FETCH_ASSOC);
-            if (!$this->orm_db_data) {
-                $this->orm_is_new = true;
-                $this->orm_db_data = array();
-            }
+
             if ($restore) {
                 $this->orm_data = $this->orm_db_data;
             } else {
@@ -221,6 +307,12 @@ class ORM implements ArrayAccess, Iterator {
                         $this[$key] = $value;
                     }
                 }
+            }
+        }
+        if (!$this->orm_db_data) {
+            $this->orm_object_is_new = true;
+            foreach (self::$orm_tableData[$tableName]['fields'] as $field => $fielddata) {
+                $this->orm_db_data[$field] = null;
             }
         }
         //setting the default values for a new object
@@ -245,15 +337,16 @@ class ORM implements ArrayAccess, Iterator {
     public function store()
     {
         $pk = self::orm_getPK();
-        $is_new = false;
+        $is_new = $this->orm_object_is_new;
         $tableName = self::orm_getTableName();
-        foreach ($pk as $index => $pkrow) {
-            if ($this->orm_data[$pkrow] === null) {
-                $is_new = true;
-                break;
-            }
-        }
         if ($is_new) {
+            if ((count($pk) === 1) && ($this[$pk[0]] === null)) {
+                //set the primary key if necessary
+                if (in_array(self::$orm_tableData[$tableName]['fields'][$pk[0]]['type'], array("varchar", "char"))) {
+                    $id = substr(md5(uniqid()), 0, self::$orm_tableData[$tableName]['fields'][$pk[0]]['maxlength']);
+                    $this[$pk[0]] = $id;
+                }
+            }
             $sql = "INSERT INTO `".$tableName."`
                     SET ";
             $params = array();
@@ -266,6 +359,12 @@ class ORM implements ArrayAccess, Iterator {
                 $params[md5($field)] = $this[$field];
                 $i++;
             }
+            $statement = self::$orm_db->prepare($sql);
+            $statement->execute($params);
+            if ($this[$pk[0]] === null) {
+                $this[$pk[0]] = $statement->get_last_insert_id;
+            }
+            $this->orm_object_is_new = false;
         } else {
             $sql = "UPDATE `".$tableName."` SET ";
             $i = 0;
@@ -327,9 +426,14 @@ class ORM implements ArrayAccess, Iterator {
         return $this->orm_iterator;
     }
     public function next () {}
+
     public function rewind () {}
 
     public function valid () {
         return isset($this->orm_data[$this->orm_iterator]);
+    }
+
+    public function asArray() {
+        return $this->orm_data;
     }
 }

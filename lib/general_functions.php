@@ -9,6 +9,19 @@ function escapeHtml($text) {
     return htmlentities($text, ENT_COMPAT, "UTF-8");
 }
 
+function isAjax() {
+    return (
+        isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+        && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
+    );
+}
+
+function redirect($route) {
+    ob_clean();
+    header("Location: ".URL::create($route));
+    exit;
+}
+
 $GLOBALS['URL'] = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
 $GLOBALS['URL'] .= "://".$_SERVER['SERVER_NAME'];
 if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' && $_SERVER['SERVER_PORT'] != 443) ||

@@ -49,4 +49,13 @@ abstract class Controller {
         }
 
     }
+
+    /**
+     * Outputs the data as JSON string and sets the Content-Type header.
+     * @param array $output
+     */
+    public function renderJSON($output = array()) {
+        header("Content-Type: application/json");
+        echo json_encode($output);
+    }
 }

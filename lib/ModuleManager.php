@@ -9,10 +9,14 @@ class ModuleManager {
 
     protected $moduleFolder = null;
     protected $moduleClasses = null;
-    protected $modules = array();
+    protected $modules = null;
 
     public function __construct($path) {
         $this->moduleFolder = $path;
+    }
+
+    public function getModuleFolder() {
+        return $this->moduleFolder;
     }
 
     public function loadModules() {
@@ -27,9 +31,12 @@ class ModuleManager {
         }
     }
 
-    public function getModules() {
-        //$this->moduleClasses = array_intersect(self::getDatabaseModules(), self::getFileSystemModules());
-        $this->moduleClasses = self::getDatabaseModules() + self::getFileSystemModules();
+    public function getModules($force_reload = false) {
+        if (($this->modules === null) || $force_reload) {
+            //$this->moduleClasses = array_intersect(self::getDatabaseModules(), self::getFileSystemModules());
+            $this->moduleClasses = self::getDatabaseModules() + self::getFileSystemModules();
+        }
+        return $this->moduleClasses;
     }
 
     public function setUpModuleHooks() {

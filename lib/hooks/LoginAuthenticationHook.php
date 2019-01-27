@@ -10,25 +10,47 @@ class LoginAuthenticationHook implements Hook {
         return "";
     }
 
-    protected $isAuthenticated = false;
-    protected $login = null;
-    protected $password = null;
+    protected $isAuthenticated = false;     //Must be set to true to log the user in
+    protected $login = null;                //A Login class object or null if none is found
+    protected $username = null;             //The username as from $_POST['username']
+    protected $password = null;             //The cleartext password as from $_POST['password']
+    protected $url = null;                  //URL to redirect to after successful Login-process
 
-    public function __construct($login, $password) {
+    public function __construct($login, $username, $password) {
         $this->login = $login;
+        $this->username = $username;
         $this->password = $password;
     }
 
+    /**
+     * Returns the Login object as it is in the database. If no matching login in database was found, this returns null.
+     * For this case ask for the username.
+     * @return null|Login object
+     */
     public function getLogin() {
         return $this->login;
     }
 
+    /**
+     * @return username
+     */
+    public function getUsername() {
+        return $this->username;
+    }
+
+    /**
+     * @return string $password : cleartext password of user.
+     */
     public function getPassword() {
         return $this->password;
     }
 
     public function isAuthenticated() {
         return $this->isAuthenticated;
+    }
+
+    public function setLogin(Login $login) {
+        $this->login = $login;
     }
 
     /**

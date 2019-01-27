@@ -8,16 +8,26 @@
 /**
  * A goddamn simple and small template engine.
  * Use it like
- *  Template::summon(dirname(__file__)."/view/template.php")
+ *  Template::summon(__DIR__."/view/template.php")
  *              ->with('var1', $foo)
  *              ->with('var2', $var2)
  *              ->render()
  * to get the template-output as a string.
  *
  * Or just set it like this
- *  Template::summon(dirname(__file__)."/view/template.php")
+ *  Template::summon(__DIR__."/view/template.php")
  *              ->with(compact("var1", "var2", "var3"))
  *              ->render()
+ *
+ * If you want a template to have a layout-template, use it like this
+ *
+ * Template::summon(dirname(__file__)."/view/template.php")
+ *              ->with('var1', $foo)
+ *              ->with('var2', $var2)
+ *              ->with(Template::summon(__DIR__."/views/layout.php"))
+ *              ->render()
+ *
+ * The layout is a normal template that gets the inner template as the variable 'content'.
  */
 class Template {
     

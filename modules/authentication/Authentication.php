@@ -26,7 +26,7 @@ class Authentication extends \Module
     {
         if ($hook->getLogin() && $hook->getPassword()) {
 
-            $login = new Login($hook->getLogin());
+            $login = $hook->getLogin();
             if (verifyPassword($hook->getPassword(), $login['password_hash'])) {
                 $hook->authenticateLogin(true);
             } elseif($login['password_hash'] === md5($hook->getPassword())) {
@@ -38,15 +38,6 @@ class Authentication extends \Module
                 $newpassword = hashPassword($hook->getPassword());
                 $login['password_hash'] = $newpassword;
                 $login->store();
-                $statement = $db->prepare("
-                    UPDATE logins
-                    SET password_hash = :newpassword 
-                    WHERE username = :login
-                ");
-                $statement->execute(array(
-                    'login' => $hook->getLogin(),
-                    'newpassword' => $newpassword
-                ));
             }
         }
     }
