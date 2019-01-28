@@ -13,16 +13,12 @@ require_once __DIR__."/../lib/Module.php";
 require_once __DIR__."/../lib/error_handler.php";
 
 //configs
-$configdir_path = __DIR__."/../configs";
-$configdir = opendir($configdir_path);
-while (($file = readdir($configdir)) !== false) {
-    if (!is_dir($configdir_path."/".$file)
-            && strpos($file, ".") !== 0  //no .ht... or other hidden files
-            && strpos($file, ".php") !== false) {
-        include_once $configdir_path."/".$file;
-    }
+include_once __DIR__ . "/../configs/default_configs.php";
+if (file_exists(__DIR__ . "/../configs/custom_configs.php")) {
+    include_once __DIR__ . "/../configs/custom_configs.php";
+} else {
+    $GLOBALS['NO_CONFIGURATION'] = true;
 }
-closedir($configdir);
 
 require_once __DIR__."/../lib/DBManager.php";
 require_once __DIR__ . "/../lib/ORM.php";

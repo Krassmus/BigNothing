@@ -5,6 +5,21 @@
  * obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+if (!function_exists("hashPassword")) {
+    function hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_BCRYPT, array(
+            'cost' => 12
+        ));
+    }
+}
+if (!function_exists("verifyPassword")) {
+    function verifyPassword($password, $hash)
+    {
+        return password_verify($password, $hash);
+    }
+}
+
 function escapeHtml($text) {
     return htmlentities($text, ENT_COMPAT, "UTF-8");
 }
@@ -22,6 +37,7 @@ function redirect($route) {
     exit;
 }
 
+//setup global variable URL as the base-URL of bignothing
 $GLOBALS['URL'] = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
 $GLOBALS['URL'] .= "://".$_SERVER['SERVER_NAME'];
 if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' && $_SERVER['SERVER_PORT'] != 443) ||
