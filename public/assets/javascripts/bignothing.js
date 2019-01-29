@@ -1,4 +1,4 @@
-BN = {};
+var BN = BN || {};
 
 BN.crypto = {
 	worker: null,

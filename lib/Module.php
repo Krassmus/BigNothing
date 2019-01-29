@@ -32,20 +32,29 @@ abstract class Module {
      * @param $vars
      */
     public function perform($controller, $action, $vars) {
-        $controller = ucfirst(strtolower($controller));
         $moduleClass = get_class($this);
         $reflection = new ReflectionClass($moduleClass);
         $directory = dirname($reflection->getFileName());
-        $namespace = $reflection->getNamespaceName();
-        $controllerFile = $directory."/controller/".$controller.".php";
-        if (file_exists($controllerFile)) {
-            require_once $controllerFile;
-            $controllerClass = '\\'.$namespace.'\\'.$controller;
-            if (class_exists($controllerClass)) {
-                $controller = new $controllerClass();
-                $controller->performAction($action, $vars);
+        if ($controller === "assets") {
+            //static files:
+            if (file_exists($directory . "/assets/".$action)) {
+                echo file_get_contents($directory . "/assets/".$action);
                 return true;
             }
+        } else {
+            $controller = ucfirst(strtolower($controller));
+            $namespace = $reflection->getNamespaceName();
+            $controllerFile = $directory . "/controller/" . $controller . ".php";
+            if (file_exists($controllerFile)) {
+                require_once $controllerFile;
+                $controllerClass = '\\' . $namespace . '\\' . $controller;
+                if (class_exists($controllerClass)) {
+                    $controller = new $controllerClass();
+                    $controller->performAction($action, $vars);
+                    return true;
+                }
+            }
         }
+        return false;
     }
 }

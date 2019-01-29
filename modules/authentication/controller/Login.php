@@ -10,6 +10,7 @@ namespace Authentication;
 class Login extends \Controller {
 
     public function defaultAction() {
+        \Layout::addScript(\URL::create("authentication/assets/login.js"));
         $this->renderView();
     }
 
@@ -30,7 +31,8 @@ class Login extends \Controller {
                 $_SESSION['currentLoginId'] = $loginAuthentication->getLogin()->getId();
                 if (isAjax()) {
                     $output = array(
-                        'login' => $loginAuthentication->getLogin()->asArray()
+                        'login' => $loginAuthentication->getLogin()->asArray(),
+                        'redirect' => \URL::create("")
                     );
                     $this->renderJSON($output);
                 } else {
