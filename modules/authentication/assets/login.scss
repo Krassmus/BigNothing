@@ -2,7 +2,7 @@ $primary-color: brown;
 body {
   color: $primary-color;
 
-  button {
+  > button {
     background-color: yellow;
   }
 }

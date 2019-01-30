@@ -15,20 +15,26 @@ class Package extends \Controller {
         if (strrpos($package, ".") !== false) {
             $package = substr($package, 0, strrpos($package, "."));
         }
-        $concat_files = "";
+        $last_update = 0;
         $hook = \HookCenter::run("\\Sass\\SassHook");
         foreach ($hook->getSassPackageFiles($package) as $file) {
-            $concat_files .= file_get_contents($file);
+            if (file_exists($file)) {
+                $last_update = max($last_update, filemtime($file));
+            }
         }
-        $hash = md5($concat_files);
-
-        $sass_file = $GLOBALS['PATH_DATA'] . "/cache/sass-" . $package . "-" . $hash . ".css";
+        $sass_file = $GLOBALS['PATH_DATA'] . "/cache/sass-" . $package . "-" . $last_update . ".css";
         if (file_exists($sass_file)) {
             //we already have that file in cache
             echo file_get_contents($sass_file);
             return;
         } else {
             //we need to recompile the package
+            $concat_files = "";
+            foreach ($hook->getSassPackageFiles($package) as $file) {
+                if (file_exists($file)) {
+                    $concat_files .= file_get_contents($file);
+                }
+            }
             $scss = new \Leafo\ScssPhp\Compiler();
             $scss->setFormatter("Leafo\ScssPhp\Formatter\Compressed");
             try {
