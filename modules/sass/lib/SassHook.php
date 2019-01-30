@@ -35,6 +35,10 @@ class SassHook implements \Hook {
         return "Collects SASS/SCSS files in packages to the compiler.";
     }
 
+    public function __construct() {
+        $this->activeSassPackages[] = "global";
+    }
+
     /**
      * Add a file to a given package. The file should be a CSS or SCSS file in absolute path (not URL).
      * @param string $path : absolute path to the file
