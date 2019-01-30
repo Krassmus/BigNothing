@@ -38,18 +38,18 @@ spl_autoload_register(function ($class) use ($moduleManager, $pluginManager) {
     $module_classes = $moduleManager->getModules();
     $plugin_classes = $pluginManager->getModules();
     if (strpos($class, "\\") !== false) {
-        $class_array = preg_split("\\", $class, -1, PREG_SPLIT_NO_EMPTY);
+
+        $class_array = preg_split("/\\\\/", $class, -1, PREG_SPLIT_NO_EMPTY);
         $modulename = array_shift($class_array);
         $possible_path = implode("/", $class_array);
-
-        if (in_array($class[0], $module_classes)) {
-            $path = __DIR__ . "/../" . $moduleManager->getModuleFolder()."/".$modulename."/lib/".$possible_path . ".php";
+        if (in_array(strtolower($modulename), $module_classes)) {
+            $path = $moduleManager->getModuleFolder()."/".strtolower($modulename)."/lib/".$possible_path . ".php";
             if (file_exists($path)) {
                 include_once $path;
             }
         }
-        if (in_array($class[0], $plugin_classes)) {
-            $path = __DIR__ . "/../" . $moduleManager->$pluginManager()."/".$modulename."/lib/".$possible_path . ".php";
+        if (in_array(strtolower($modulename), $plugin_classes)) {
+            $path = $moduleManager->$pluginManager()."/".strtolower($modulename)."/lib/".$possible_path . ".php";
             if (file_exists($path)) {
                 include_once $path;
             }

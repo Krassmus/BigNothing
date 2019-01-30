@@ -18,3 +18,6 @@ The main goals of BigNothing are:
 ## License
 
 This software is licensed under the Mozilla Public License 2. This means it has a strong copyleft for all files in this project. But you can add new files under a different license if you want to.
+
+Integrated libraries with varying licenses are
+* [scssphp](https://github.com/leafo/scssphp): MIT license

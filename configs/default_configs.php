@@ -17,3 +17,5 @@ $GLOBALS['DATABASE'] = array(
 
 //add an email-adress here that catches all support-requests by the user.
 $GLOBALS['SUPPORT_MAIL'] = null;
+
+$GLOBALS['PATH_DATA'] = realpath(__DIR__."/../data");

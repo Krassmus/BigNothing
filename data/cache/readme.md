@@ -1,0 +1,1 @@
+This is the folder for all kinds of file caches that BigNothing has.

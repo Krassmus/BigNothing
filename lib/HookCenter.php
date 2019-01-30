@@ -85,7 +85,6 @@ class HookCenter
      */
     static public function register($hookclass, $callable) 
     {
-        $hookclass = strtolower($hookclass);
         self::$hooks[$hookclass][] = $callable;
     }
     
@@ -97,7 +96,7 @@ class HookCenter
      * information to the instance back. This method returns the instance that
      * has run through all registered functions.
      * @param type $hookclass : the name of the class that defined the behaviour 
-     * of thee hook. The class is more or less identic with the hook. An instance 
+     * of the hook. The class is more or less identic with the hook. An instance
      * of $hookclass will get passed to all registered functions and those functions
      * can interact with this instance, call public methods and even give 
      * information to the object. The code that has called the Hook (called #run)
@@ -114,7 +113,6 @@ class HookCenter
      */
     static public function run($hookclass, $instance = null) 
     {
-        $hookclass = strtolower($hookclass);
         if ($instance === null or !is_a($instance, $hookclass)) {
             $instance = new $hookclass();
         }

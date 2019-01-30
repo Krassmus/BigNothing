@@ -15,6 +15,15 @@ class Authentication extends \Module
             "LoginAuthenticationHook",
             "\\Authentication\\Authentication::authenticateUser"
         );
+        \HookCenter::register(
+            "\\Sass\\SassHook",
+            "\\Authentication\\Authentication::addSassFile"
+        );
+    }
+
+    public function addSassFile($hook) {
+        $hook->activateSassPackage("global");
+        $hook->addSassFile(__DIR__."/assets/login.scss", "global");
     }
 
     /**
