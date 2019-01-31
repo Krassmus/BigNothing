@@ -12,7 +12,7 @@ namespace Sass;
  *
  *     \HookCenter::register(
  *         "\\Sass\\SassHook",
- *         "\\Authentication\\Authentication::addSassFile"
+ *         "\\MyModule\\MyModule::addSassFile"
  *     );
  *
  * SASS/SCSS-files are here aggregated to packages. We have a global package called "global". If you want
@@ -28,15 +28,15 @@ namespace Sass;
  */
 class SassHook implements \Hook {
 
-    protected $sassPackages = array();
-    protected $activeSassPackages = array();
+    static protected $sassPackages = array();
+    static protected $activeSassPackages = array();
 
     static public function getHookDescription() {
         return "Collects SASS/SCSS files in packages to the compiler.";
     }
 
     public function __construct() {
-        $this->activeSassPackages[] = "global";
+        self::$activeSassPackages[] = "global";
     }
 
     /**
@@ -45,7 +45,7 @@ class SassHook implements \Hook {
      * @param string $package : "global" or any other string (without /-slashes). Other packages than "global" should only be activated in a Controller and not globally.
      */
     public function addSassFile($path, $package = "global") {
-        $this->sassPackages[$package][] = $path;
+        self::$sassPackages[$package][] = $path;
     }
 
     /**
@@ -53,7 +53,7 @@ class SassHook implements \Hook {
      * @param string $package : the name of the package.
      */
     public function activateSassPackage($package) {
-        $this->activeSassPackages[] = $package;
+        self::$activeSassPackages[] = $package;
     }
 
     /**
@@ -62,7 +62,7 @@ class SassHook implements \Hook {
      * @return array
      */
     public function getActiveSassPackages() {
-        return $this->activeSassPackages;
+        return self::$activeSassPackages;
     }
 
     /**
@@ -72,6 +72,11 @@ class SassHook implements \Hook {
      * @return array of absolute filenames
      */
     public function getSassPackageFiles($package = "global") {
-        return $this->sassPackages[$package];
+        if (isset(self::$sassPackages[$package])) {
+            self::$sassPackages[$package] = array_unique(self::$sassPackages[$package]);
+            return self::$sassPackages[$package];
+        } else {
+            return null;
+        }
     }
 }

@@ -61,6 +61,14 @@ class Template {
     }
 
     /**
+     * Returns the absolute path to the template
+     * @return string
+     */
+    public function getTemplatePath() {
+        return realpath($this->place);
+    }
+
+    /**
      * pass one or many variables to the template
      * @param string|array $firstparam : name of the variable as it should be used 
      * within the template or associated array with names and values of multiple variables
@@ -94,6 +102,10 @@ class Template {
         foreach($this->env as $varname => $value) {
             ${$varname} = $value;
         }
+        if ($this->layout) {
+            HookCenter::run("LayoutRenderHook", new LayoutRenderHook($this->layout));
+        }
+
         ob_start();
         include $this->place;
         $output = ob_get_contents();

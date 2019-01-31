@@ -11,6 +11,7 @@ class Login extends \Controller {
 
     public function defaultAction() {
         \Layout::addScript(\URL::create("authentication/assets/login.js"));
+        \HookCenter::run("\\Sass\\SassHook")->activateSassPackage("outside");
         $this->renderView();
     }
 
@@ -19,6 +20,7 @@ class Login extends \Controller {
     }
 
     public function authenticateAction() { //Should we move these two methods to another module ?
+
         if (isset($_POST['login']) && isset($_POST['password'])) {
             $loginAuthentication = new \LoginAuthenticationHook(
                 \Login::oneBy("username", $_POST['login']),

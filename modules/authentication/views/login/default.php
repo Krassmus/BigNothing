@@ -30,21 +30,3 @@
 <div class="center">
     <a href="<?= URL::link("authentication/login/register") ?>"><?= _("Register") ?></a> / <a href=""><?= _("Troubleshooting") ?></a>
 </div>
-
-<style>
-    #contentstream {
-        width: 400px;
-        height: 400px;
-        border-radius: 20px;
-        background-image: linear-gradient(to bottom, #f5f5f5 0%,#eeeeee 35%,#cccccc 100%);
-        padding: 20px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 70px;
-        display: none;
-
-    }
-    #contentstream input, #contentstream table {
-        width: 100%;
-    }
-</style>

@@ -9,10 +9,21 @@ namespace Sass;
 
 class Sass extends \Module {
 
-    public function __construct() {
-        $hook = \HookCenter::run("\\Sass\\SassHook");
-        foreach ($hook->getActiveSassPackages() as $package) {
-            \Layout::addStyle(\URL::create("sass/package/provider/" . $package . ".css"));
+    protected $hook = null;
+
+    public static function setUpModuleHooks() {
+        \HookCenter::register(
+            "LayoutRenderHook",
+            "\\Sass\\Sass::addCSSFiles"
+        );
+    }
+
+    public function addCSSFiles() {
+        $sasshook = \HookCenter::run("\\Sass\\SassHook");
+        foreach ($sasshook->getActiveSassPackages() as $package) {
+            if (count($sasshook->getSassPackageFiles($package))) {
+                \Layout::addStyle(\URL::create("sass/package/provider/" . $package . ".css"));
+            }
         }
     }
 }

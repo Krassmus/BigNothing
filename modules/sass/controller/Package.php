@@ -18,7 +18,7 @@ class Package extends \Controller {
         }
         $last_update = 0;
         $hook = \HookCenter::run("\\Sass\\SassHook");
-        foreach ($hook->getSassPackageFiles($package) as $file) {
+        foreach ((array) $hook->getSassPackageFiles($package) as $file) {
             if (file_exists($file)) {
                 $last_update = max($last_update, filemtime($file));
             }
