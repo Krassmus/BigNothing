@@ -12,6 +12,7 @@ require __DIR__."/../vendor/scssphp/scss.inc.php";
 class Package extends \Controller {
 
     public function providerAction($package) {
+        header("Content-Type: text/css");
         if (strrpos($package, ".") !== false) {
             $package = substr($package, 0, strrpos($package, "."));
         }
@@ -47,7 +48,7 @@ class Package extends \Controller {
                     }
                 }
 
-                file_put_contents($sass_file, $output);
+                $success = @file_put_contents($sass_file, $output);
             } catch (Exception $e) {
                 //save message to database?
                 $output = "/* SASS-error by parser: ".$e->getMessage()."*/\n\n";

@@ -55,7 +55,7 @@ spl_autoload_register(function ($class) use ($moduleManager, $pluginManager) {
             }
         }
     } else {
-        $folders = array("lib", "lib/hooks", "lib/models");
+        $folders = array("lib", "lib/hooks", "lib/models", "lib/exceptions");
         foreach ($folders as $folder) {
             if (file_exists(__DIR__ . "/../" . $folder . "/" . $class . ".php")) {
                 include_once __DIR__ . "/../" . $folder . "/" . $class . ".php";
@@ -94,6 +94,6 @@ if ($route === "/") {
 $routed = $router->processRouting($route);
 
 if (!$routed) {
-    throw new Exception("404 - Page not found");
+    throw new PageNotFoundException();
 }
 

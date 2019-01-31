@@ -22,7 +22,7 @@ class Authentication extends \Module
     }
 
     public function addSassFile($hook) {
-        $hook->addSassFile(__DIR__."/assets/login.scss", "global");
+        //$hook->addSassFile(__DIR__."/assets/login.scss", "outside");
     }
 
     /**
