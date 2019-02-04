@@ -138,11 +138,11 @@ h1 {
 /* Stream */
 
 .context_background_left {
-    background: -moz-linear-gradient(left center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
+    background: linear-gradient(left center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
     background-size: 20% 100%;
 }
 .context_background_right {
-    background: -moz-linear-gradient(right center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
+    background: linear-gradient(right center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
     background-size: 20% 100%;
     background-position: right;
 }

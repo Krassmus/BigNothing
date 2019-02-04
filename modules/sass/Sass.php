@@ -16,6 +16,12 @@ class Sass extends \Module {
             "LayoutRenderHook",
             "\\Sass\\Sass::addCSSFiles"
         );
+        \HookCenter::register(
+            "\\Sass\\SassHook",
+            function ($hook) {
+                $hook->addSassFile(__DIR__."/../../public/assets/stylesheets/bignothing.scss", "global");
+            }
+        );
     }
 
     public function addCSSFiles() {

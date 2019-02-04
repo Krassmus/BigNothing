@@ -17,15 +17,21 @@ class Package extends \Controller {
             $package = substr($package, 0, strrpos($package, "."));
         }
         $last_update = 0;
+        $broken_files = "";
         $hook = \HookCenter::run("\\Sass\\SassHook");
         foreach ((array) $hook->getSassPackageFiles($package) as $file) {
             if (file_exists($file)) {
                 $last_update = max($last_update, filemtime($file));
+            } else {
+                $broken_files .= $file." | ";
             }
         }
         $sass_file = $GLOBALS['PATH_DATA'] . "/cache/sass-" . $package . "-" . $last_update . ".css";
         if (file_exists($sass_file)) {
             //we already have that file in cache
+            if ($broken_files) {
+                echo "/* Broken SCCS files: " . $broken_files . " */\n";
+            }
             echo file_get_contents($sass_file);
             return;
         } else {
@@ -60,6 +66,9 @@ class Package extends \Controller {
                         break;
                     }
                 }
+            }
+            if ($broken_files) {
+                echo "/* Broken SCCS files: " . $broken_files . " */\n";
             }
             echo $output;
         }
