@@ -20,6 +20,7 @@ class Sass extends \Module {
             "\\Sass\\SassHook",
             function ($hook) {
                 $hook->addSassFile(__DIR__."/../../public/assets/stylesheets/bignothing.scss", "global");
+                $hook->addSassFile(__DIR__."/../../public/assets/stylesheets/form.scss", "global");
             }
         );
     }

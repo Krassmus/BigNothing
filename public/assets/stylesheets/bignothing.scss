@@ -1,9 +1,186 @@
-form.bn {
-    label {
-        display: block;
-        margin-top: 10px;
-        > input, select, textarea {
-            display: block;
-        }
-    }
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Source Sans Pro'), local('SourceSansPro-Regular'), url(../../../assets/fonts/SourceSansPro-Regular.woff) format('woff');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(../../../assets/fonts/SourceSansPro-Bold.woff) format('woff');
+}
+@font-face {
+    font-family: 'Entypo';
+    src: url(../../../assets/fonts/entypo.ttf);
+}
+@font-face {
+    font-family: 'Mulders Handwriting';
+    src: url(../../../assets/fonts/mulders-handwriting.ttf);
+}
+
+:root {
+    /*var-base-color: 120;
+    var-background-color: hsla(var(base-color), 35%, 40%, 1);
+    var-click-color: hsla(calc(var(base-color) + 120), 35%, 40%, 1);
+    var-hover-color: hsla(calc(var(base-color) + 270), 60%, 35%, 1);*/
+    --base-color: 120;
+    --background-color: hsla(var(--base-color), 35%, 40%, 1);
+    --click-color: hsla(calc(var(--base-color) + 120), 35%, 40%, 1);
+    --hover-color: hsla(calc(var(--base-color) + 270), 60%, 35%, 1);
+}
+
+
+body {
+    background-color: hsla(120, 35%, 40%, 1);
+    /*background-color: var(background-color);*/
+    /*background-color: var(--background-color);*/
+    /* background-image: url("../images/noise.png"); */
+    background: linear-gradient(0, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url("../../../assets/images/amplifier.jpeg");
+    background-size: 100vw 100vh, auto auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-color: black;
+    padding: 0px;
+    margin: 0px;
+    font-family: Source Sans Pro;
+}
+
+#topbar {
+    background: black;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+    margin-top: 0px;
+    color: lightgrey;
+    width: calc(100% - 10px);
+    padding: 5px;
+    font-family: Mulders Handwriting;
+    font-size: 1.3em;
+}
+.fixed #topbar {
+	position: fixed;
+	top: 0px;
+	margin-top: 0px;
+}
+#topbar_ghost {
+	margin-top: 0px;
+    width: calc(100% - 10px);
+    padding: 5px;
+	display: none;
+}
+.fixed #topbar_ghost {
+	display: block;
+	visibility: hidden;
+}
+
+#contentstream {
+	background-color: white;
+    margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: calc(100% - 60px);
+	padding: 10px;
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.icon {
+	display: inline-block;
+	text-align: center;
+	font-family: Entypo;
+	font-size: 2em;
+	vertical-align: text-bottom;
+    line-height: 0.64em;
+}
+
+a {
+	color: hsla(240, 35%, 40%, 1);
+    /*color: var(click-color);*/
+	cursor: pointer;
+}
+a:hover {
+	text-decoration: underline;
+	color: hsla(30, 60%, 35%, 1);
+    /*color: var(hover-color);*/
+}
+a.intern:before {
+    content: "";
+    display: inline-block;
+    text-align: center;
+    font-family: Entypo;
+    font-size: 2em;
+    vertical-align: text-bottom;
+    line-height: 0.64em;
+}
+a.extern:before {
+    content: "↳";
+    display: inline-block;
+    text-align: center;
+    font-family: Entypo;
+    font-size: 2em;
+    vertical-align: text-bottom;
+    line-height: 0.64em;
+}
+h1, h2, h3 {
+	color: rgba(60,60,60,1);
+    font-family: Mulders Handwriting;
+}
+h1, h2 {
+	border-bottom: 2px solid rgba(0,0,0,0.4);
+}
+h1 {
+    margin-top: 0px;
+}
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Stream */
+
+.context_background_left {
+    background: linear-gradient(left center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
+    background-size: 20% 100%;
+}
+.context_background_right {
+    background: linear-gradient(right center , #FFFFFF 50%, #E7EBF1 100%) no-repeat;
+    background-size: 20% 100%;
+    background-position: right;
+}
+ul.activitystream {
+    width: 60%;
+    border-left: thin solid hsla(240, 35%, 40%, 1);
+    border-right: thin solid hsla(240, 35%, 40%, 1);
+    margin: 0px;
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+ul.activitystream > li {
+    list-style-type: none;
+    border-bottom: thin solid hsla(240, 35%, 40%, 1);
+}
+ul.activitystream > li:last-child {
+    border-bottom: none;
+}
+
+
+button {
+    display: inline-block;
+    border: none;
+    min-width: 150px;
+    min-height: 30px;
+    max-height: 30px;
+    text-align: center;
+    color: white;
+    background-color: black;
+    margin: 10px;
+    cursor: pointer;
+}
+.buttons {
+    text-align: center;
+    padding: 10px;
+}
+
+#loginform.waiting {
+    opacity: 50%;
 }

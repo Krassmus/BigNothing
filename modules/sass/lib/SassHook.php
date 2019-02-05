@@ -36,7 +36,7 @@ class SassHook implements \Hook {
     }
 
     public function __construct() {
-        self::$activeSassPackages[] = "global";
+        $this->activateSassPackage("global"); //this should always be active
     }
 
     /**
@@ -53,7 +53,9 @@ class SassHook implements \Hook {
      * @param string $package : the name of the package.
      */
     public function activateSassPackage($package) {
-        self::$activeSassPackages[] = $package;
+        if (!in_array($package, self::$activeSassPackages)) {
+            self::$activeSassPackages[] = $package;
+        }
     }
 
     /**
