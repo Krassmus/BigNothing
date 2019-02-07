@@ -19,7 +19,7 @@
     <div class="center"><button type="submit"><?= _("enter") ?></button></div>
     <script>
         jQuery(function () {
-            jQuery("#contentstream").delay(300).fadeIn(300, function () { jQuery(this).find("#login").focus(); });
+            jQuery("#content").delay(300).fadeIn(300, function () { jQuery(this).find("#login").focus(); });
             jQuery("#loginform").on("submit", function () {
                 console.log(jQuery("#passphrase").val());
                 jQuery("#passphrase").val("");
@@ -28,5 +28,7 @@
     </script>
 </form>
 <div class="center">
-    <a href="<?= URL::link("authentication/login/register") ?>"><?= _("Register") ?></a> / <a href=""><?= _("Troubleshooting") ?></a>
+    <a href="<?= URL::link("authentication/login/register") ?>"><?= _("Register") ?></a>
+    /
+    <a href="<?= URL::link("authentication/login/troubleshooting") ?>"><?= _("Troubleshooting") ?></a>
 </div>

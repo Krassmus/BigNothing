@@ -1,7 +1,6 @@
 <?
 $version = file_get_contents(__DIR__."/../VERSION");
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -30,7 +29,7 @@ $version = file_get_contents(__DIR__."/../VERSION");
 	<body>
 		<div id="topbar">Big Nothing</div>
 		<div id="topbar_ghost">just to be there</div>
-		<div id="contentstream">
+		<div id="content">
 			<?= $content ?>
 		</div>
 		<div style="min-height: 20px;"></div>

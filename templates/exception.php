@@ -1,5 +1,5 @@
 <style>
-    #contentstream {
+    #content {
         width: 800px;
         border-radius: 20px;
         background-image: linear-gradient(to bottom, #f5f5f5 0%,#eeeeee 35%,#cccccc 100%);
@@ -8,7 +8,7 @@
         margin-right: auto;
         margin-top: 70px;
     }
-    #contentstream input, #contentstream table {
+    #content input, #content table {
         width: 100%;
     }
 

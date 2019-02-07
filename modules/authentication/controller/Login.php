@@ -52,4 +52,8 @@ class Login extends \Controller {
         }
         redirect("/authentication/login");
     }
+
+    public function troubleshootingAction() {
+        $this->renderView();
+    }
 }

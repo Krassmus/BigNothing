@@ -36,26 +36,7 @@ BN.crypto = {
 	}
 };
 
-BN.layout = {
-	topmargin: null,
-	topbarIsFixed: false,
-	initTopbar: function () {
-		if (jQuery('#topbar').length > 0) {
-            BN.layout.topmargin = $('#topbar').offset().top;
-            jQuery(document).bind('scroll.bn', _.throttle(BN.layout.scrollchecker, 10)).trigger('scroll.bn');
-        }
-	},
-	scrollchecker: function () {
-		var isBelowTopbar = $(document).scrollTop() > BN.layout.topmargin;
-		if (isBelowTopbar !== BN.layout.topbarIsFixed) {
-			$('body').toggleClass('fixed', isBelowTopbar);
-            BN.layout.topbarIsFixed = isBelowTopbar;
-		}
-	}
-};
-
 jQuery(function () {
-	BN.layout.initTopbar();
 	BN.crypto.init();
 });
 
