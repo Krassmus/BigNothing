@@ -46,8 +46,7 @@ class Request {
                 'post' => count($_POST),
                 'variables' => $_REQUEST,
                 'headers' => $headers
-            ), STDIN);
-
+            ), fopen("php://stdin","r"));
         }
         return self::$instance;
     }
