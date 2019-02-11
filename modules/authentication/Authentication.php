@@ -18,7 +18,7 @@ class Authentication extends \Module
         \HookCenter::register(
             "\\Sass\\SassHook",
             function ($hook) {
-                $hook->addSassFile(__DIR__."/assets/login.scss", "outside");
+                $hook->addSassFile(__DIR__ . "/assets/login.scss", "outside");
             }
         );
     }

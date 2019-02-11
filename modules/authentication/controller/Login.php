@@ -16,34 +16,14 @@ class Login extends \Controller {
     }
 
     public function registerAction() {
+        \Layout::addScript(\URL::create("authentication/assets/login.js"));
+        \HookCenter::run("\\Sass\\SassHook")->activateSassPackage("outside");
         $this->renderView();
     }
 
     public function authenticateAction() { //Should we move these two methods to another module ?
 
-        if (isset($_POST['login']) && isset($_POST['password'])) {
-            $loginAuthentication = new \LoginAuthenticationHook(
-                \Login::oneBy("username", $_POST['login']),
-                $_POST['login'],
-                $_POST['password']
-            );
-            $loginAuthentication = \HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
 
-            if ($loginAuthentication->isAuthenticated()) {
-                $_SESSION['currentLoginId'] = $loginAuthentication->getLogin()->getId();
-                if (isAjax()) {
-                    $output = array(
-                        'login' => $loginAuthentication->getLogin()->asArray(),
-                        'redirect' => \URL::create("")
-                    );
-                    $this->renderJSON($output);
-                } else {
-                    redirect("stream/everything/index");
-                }
-            } else {
-                unset($_SESSION);
-            }
-        }
     }
 
     public function logoutAction() {
@@ -54,6 +34,15 @@ class Login extends \Controller {
     }
 
     public function troubleshootingAction() {
+        \Layout::addScript(\URL::create("authentication/assets/login.js"));
+        \HookCenter::run("\\Sass\\SassHook")->activateSassPackage("outside");
         $this->renderView();
+    }
+
+    public function username_existsAction() {
+        $login = \Login::oneBy("username", $_GET['login']);
+        echo json_encode(array(
+            'exists' => $login ? 1 : 0
+        ));
     }
 }

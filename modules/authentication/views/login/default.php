@@ -1,4 +1,7 @@
-<form action="<?= URL::create("authentication/login/authenticate") ?>" method="POST" id="loginform">
+<form action="<?= URL::create("authentication/login/authenticate") ?>"
+      method="POST"
+      class="small"
+      id="loginform">
     <h1><?= _("#Welcome on board ...") ?></h1>
     <table>
         <tbody>
@@ -17,18 +20,9 @@
         </tbody>
     </table>
     <div class="center"><button type="submit"><?= _("enter") ?></button></div>
-    <script>
-        jQuery(function () {
-            jQuery("#content").delay(300).fadeIn(300, function () { jQuery(this).find("#login").focus(); });
-            jQuery("#loginform").on("submit", function () {
-                console.log(jQuery("#passphrase").val());
-                jQuery("#passphrase").val("");
-            });
-        });
-    </script>
 </form>
 <div class="center">
-    <a href="<?= URL::link("authentication/login/register") ?>"><?= _("Register") ?></a>
+    <a href="<?= URL::link("authentication/register") ?>"><?= _("Register") ?></a>
     /
     <a href="<?= URL::link("authentication/login/troubleshooting") ?>"><?= _("Troubleshooting") ?></a>
 </div>

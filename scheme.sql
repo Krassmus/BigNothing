@@ -28,3 +28,14 @@ CREATE TABLE `identities` (
   `name` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`identity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `oauth2_accesstokens` (
+  `token_id` varchar(64) NOT NULL DEFAULT '',
+  `user_id` varchar(32) DEFAULT NULL,
+  `app_id` varchar(32) DEFAULT NULL,
+  `exipration_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`token_id`),
+  KEY `user_id` (`user_id`),
+  KEY `app_id` (`app_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
