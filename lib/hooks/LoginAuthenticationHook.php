@@ -7,20 +7,12 @@
 
 class LoginAuthenticationHook implements Hook {
     static public function getHookDescription() {
-        return "";
+        return "This hook is needed to log a user in. It is always called in the index.php if a user is not logged in yet. It could be logged in by Standard-Auth (username, password as GET-parameters) or by OAuth2 or any other plugin (OpenID, LDAP, HTTP-Basic-Auth, maybe?).";
     }
 
     protected $isAuthenticated = false;     //Must be set to true to log the user in
     protected $login = null;                //A Login class object or null if none is found
-    protected $username = null;             //The username as from $_POST['username']
-    protected $password = null;             //The cleartext password as from $_POST['password']
     protected $url = null;                  //URL to redirect to after successful Login-process
-
-    public function __construct($login, $username, $password) {
-        $this->login = $login;
-        $this->username = $username;
-        $this->password = $password;
-    }
 
     /**
      * Returns the Login object as it is in the database. If no matching login in database was found, this returns null.
@@ -31,24 +23,14 @@ class LoginAuthenticationHook implements Hook {
         return $this->login;
     }
 
-    /**
-     * @return username
-     */
-    public function getUsername() {
-        return $this->username;
-    }
-
-    /**
-     * @return string $password : cleartext password of user.
-     */
-    public function getPassword() {
-        return $this->password;
-    }
-
     public function isAuthenticated() {
         return $this->isAuthenticated;
     }
 
+    /**
+     * When your module decides to log a user in, it MUST set the login with this method.
+     * @param Login $login
+     */
     public function setLogin(Login $login) {
         $this->login = $login;
     }

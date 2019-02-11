@@ -23,8 +23,8 @@ class Oauth2 extends \Module
      */
     public static function authenticateUser($hook)
     {
-        if (isset($_SERVER['HTTP_AUTHORIZATION'])
-                && preg_match("/Bearer\s+(.+)/", $_SERVER['HTTP_AUTHORIZATION'], $matches)) {
+        if (\Request::header("Authorization")
+                && preg_match("/Bearer\s+(.+)/", \Request::header("Authorization"), $matches)) {
             $token = $matches[1];
             if ($token) {
                 $token = Accesstoken::get($token);

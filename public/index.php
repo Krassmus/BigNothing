@@ -81,22 +81,9 @@ session_start();
 if (isset($_SESSION['currentLoginId'])) {
     $GLOBALS['currentLogin'] = Login::get($_SESSION['currentLoginId']);
 } else {
-    if (isset($_POST['login']) && isset($_POST['password'])) {
-
-
-        $loginAuthentication = new \LoginAuthenticationHook(
-            \Login::oneBy("username", $_POST['login']),
-            $_POST['login'],
-            $_POST['password']
-        );
-        $loginAuthentication = \HookCenter::run("LoginAuthenticationHook", $loginAuthentication);
-    } else {
-        $loginAuthentication = \HookCenter::run("LoginAuthenticationHook", new \LoginAuthenticationHook(
-            null,
-            null,
-            null
-        ));
-    }
+    $loginAuthentication = \HookCenter::run(
+        "LoginAuthenticationHook"
+    );
     if ($loginAuthentication->isAuthenticated()) {
         $_SESSION['currentLoginId'] = $loginAuthentication->getLogin()->getId();
         if (isAjax()) {
