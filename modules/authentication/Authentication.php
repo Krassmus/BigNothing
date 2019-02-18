@@ -30,20 +30,24 @@ class Authentication extends \Module
      */
     public static function authenticateUser($hook)
     {
-        if ($hook->getLogin() && $hook->getPassword()) {
+        if (\Request::variable("username") && \Request::variable("password")) {
+            $username = \Request::variable("username");
+            $password = \Request::variable("password");
 
-            $login = $hook->getLogin();
-            if (verifyPassword($hook->getPassword(), $login['password_hash'])) {
+            $login = \Login::oneBy("username", $username);
+            if (verifyPassword($password, $login['password_hash'])) {
                 $hook->authenticateLogin(true);
-            } elseif($login['password_hash'] === md5($hook->getPassword())) {
+                $hook->setLogin($login);
+            } elseif($login['password_hash'] === md5($password)) {
                 //this is for developers - we can insert md5-hashes as passwords into the users table.
                 //With the first login-attempt we change it to a bcrypt-password hash.
                 $hook->authenticateLogin(true);
 
                 //change md5-password
-                $newpassword = hashPassword($hook->getPassword());
+                $newpassword = hashPassword($password);
                 $login['password_hash'] = $newpassword;
                 $login->store();
+                $hook->setLogin($login);
             }
         }
     }
