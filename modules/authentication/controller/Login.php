@@ -11,13 +11,13 @@ class Login extends \Controller {
 
     public function defaultAction() {
         \Layout::addScript(\URL::create("authentication/assets/login.js"));
-        \HookCenter::run("\\Sass\\SassHook")->activateSassPackage("outside");
+        \HookCenter::run("\\Scss\\ScssHook")->activateScssPackage("outside");
         $this->renderView();
     }
 
     public function registerAction() {
         \Layout::addScript(\URL::create("authentication/assets/login.js"));
-        \HookCenter::run("\\Sass\\SassHook")->activateSassPackage("outside");
+        \HookCenter::run("\\Scss\\ScssHook")->activateScssPackage("outside");
         $this->renderView();
     }
 
@@ -35,7 +35,7 @@ class Login extends \Controller {
 
     public function troubleshootingAction() {
         \Layout::addScript(\URL::create("authentication/assets/login.js"));
-        \HookCenter::run("\\Sass\\SassHook")->activateSassPackage("outside");
+        \HookCenter::run("\\Scss\\ScssHook")->activateScssPackage("outside");
         $this->renderView();
     }
 

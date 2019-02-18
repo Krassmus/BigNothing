@@ -11,7 +11,7 @@ class Register extends \Controller {
 
     public function defaultAction() {
         \Layout::addScript(\URL::create("authentication/assets/login.js"));
-        \HookCenter::run("\\Sass\\SassHook")->activateSassPackage("outside");
+        \HookCenter::run("\\Scss\\ScssHook")->activateScssPackage("outside");
         $this->renderView();
     }
 

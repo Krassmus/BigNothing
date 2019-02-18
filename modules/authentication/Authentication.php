@@ -16,9 +16,9 @@ class Authentication extends \Module
             "\\Authentication\\Authentication::authenticateUser"
         );
         \HookCenter::register(
-            "\\Sass\\SassHook",
+            "\\Scss\\ScssHook",
             function ($hook) {
-                $hook->addSassFile(__DIR__ . "/assets/login.scss", "outside");
+                $hook->addScssFile(__DIR__ . "/assets/login.scss", "outside");
             }
         );
     }
